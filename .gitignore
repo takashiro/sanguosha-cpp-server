@@ -1,0 +1,13 @@
+/bin/
+/ipch/
+/obj/
+*.suo
+*.opendb
+*.vcxproj.user
+*.db
+/*.depend
+/*.layout
+*.pro.user
+.vscode/
+.vs/
+/extension/

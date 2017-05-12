@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="core">
+      <UniqueIdentifier>{d1f96389-93a3-471a-a50d-9459f557a65e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="mode">
+      <UniqueIdentifier>{dac1b3c3-eae0-4f4e-9091-5604dea28ece}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="gamelogic">
+      <UniqueIdentifier>{24bcc29f-3a8c-4fcb-9274-3e8686be8043}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="package">
+      <UniqueIdentifier>{4380c066-8161-4c59-a428-43d6104406e3}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="gamelogic\EventType.h">
+      <Filter>gamelogic</Filter>
+    </ClInclude>
+    <ClInclude Include="core\sanguosha.h">
+      <Filter>core</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
