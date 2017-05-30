@@ -74,28 +74,28 @@
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(SolutionDir)..\bin\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)obj\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
-    <IncludePath>$(SolutionDir)..\src\core;$(SolutionDir)..\src\util;$(SolutionDir)..\src\network;$(ProjectDir)src\core;$(ProjectDir)src\mode;$(ProjectDir)src\gamelogic;$(ProjectDir)src\package;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)..\src\core;$(SolutionDir)..\src\util;$(SolutionDir)..\src\network;$(ProjectDir)core;$(ProjectDir)mode;$(ProjectDir)gamelogic;$(ProjectDir)package;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)..\lib\$(Platform)\$(Configuration);$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(SolutionDir)..\bin\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)obj\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
-    <IncludePath>$(SolutionDir)..\src\core;$(SolutionDir)..\src\util;$(SolutionDir)..\src\network;$(ProjectDir)src\core;$(ProjectDir)src\mode;$(ProjectDir)src\gamelogic;$(ProjectDir)src\package;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)..\src\core;$(SolutionDir)..\src\util;$(SolutionDir)..\src\network;$(ProjectDir)core;$(ProjectDir)mode;$(ProjectDir)gamelogic;$(ProjectDir)package;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)..\lib\$(Platform)\$(Configuration);$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(SolutionDir)..\bin\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)obj\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
-    <IncludePath>$(SolutionDir)..\src\core;$(SolutionDir)..\src\util;$(SolutionDir)..\src\network;$(ProjectDir)src\core;$(ProjectDir)src\mode;$(ProjectDir)src\gamelogic;$(ProjectDir)src\package;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)..\src\core;$(SolutionDir)..\src\util;$(SolutionDir)..\src\network;$(ProjectDir)core;$(ProjectDir)mode;$(ProjectDir)gamelogic;$(ProjectDir)package;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)..\lib\$(Platform)\$(Configuration);$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(SolutionDir)..\bin\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)obj\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
-    <IncludePath>$(SolutionDir)..\src\core;$(SolutionDir)..\src\util;$(SolutionDir)..\src\network;$(ProjectDir)src\core;$(ProjectDir)src\mode;$(ProjectDir)src\gamelogic;$(ProjectDir)src\package;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)..\src\core;$(SolutionDir)..\src\util;$(SolutionDir)..\src\network;$(ProjectDir)core;$(ProjectDir)mode;$(ProjectDir)gamelogic;$(ProjectDir)package;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)..\lib\$(Platform)\$(Configuration);$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -177,11 +177,6 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
       </PrecompiledHeader>
     </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="core\CardAreaType.h" />
-    <ClInclude Include="core\sanguosha.h" />
-    <ClInclude Include="gamelogic\EventType.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

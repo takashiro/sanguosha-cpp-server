@@ -17,15 +17,4 @@
   <ItemGroup>
     <ClCompile Include="main.cpp" />
   </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="gamelogic\EventType.h">
-      <Filter>gamelogic</Filter>
-    </ClInclude>
-    <ClInclude Include="core\sanguosha.h">
-      <Filter>core</Filter>
-    </ClInclude>
-    <ClInclude Include="core\CardAreaType.h">
-      <Filter>core</Filter>
-    </ClInclude>
-  </ItemGroup>
 </Project>

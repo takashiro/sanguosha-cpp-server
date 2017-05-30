@@ -4,11 +4,11 @@ using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 namespace test
 {
-	TEST_CLASS(UnitTest1)
+	TEST_CLASS(Test)
 	{
 	public:
 
-		TEST_METHOD(TestMethod1)
+		TEST_METHOD(None)
 		{
 			// TODO: Your test code here
 		}
