@@ -181,6 +181,7 @@
   <ItemGroup>
     <ClInclude Include="core\CardAreaType.h" />
     <ClInclude Include="core\CardMoveDirection.h" />
+    <ClInclude Include="core\common.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
