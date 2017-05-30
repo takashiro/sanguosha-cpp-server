@@ -163,6 +163,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="gamelogic\Event.cpp" />
     <ClCompile Include="main.cpp">
       <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</CompileAsManaged>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -180,8 +181,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core\CardAreaType.h" />
+    <ClInclude Include="core\CardColor.h" />
     <ClInclude Include="core\CardMoveDirection.h" />
+    <ClInclude Include="core\CardSuit.h" />
+    <ClInclude Include="core\CardType.h" />
     <ClInclude Include="core\common.h" />
+    <ClInclude Include="gamelogic\Event.h" />
+    <ClInclude Include="gamelogic\EventType.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

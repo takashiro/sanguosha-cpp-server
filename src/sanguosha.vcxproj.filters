@@ -16,6 +16,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="gamelogic\Event.cpp">
+      <Filter>gamelogic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core\CardAreaType.h">
@@ -23,6 +26,24 @@
     </ClInclude>
     <ClInclude Include="core\CardMoveDirection.h">
       <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="core\common.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="core\CardSuit.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="core\CardColor.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="core\CardType.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="gamelogic\Event.h">
+      <Filter>gamelogic</Filter>
+    </ClInclude>
+    <ClInclude Include="gamelogic\EventType.h">
+      <Filter>gamelogic</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
