@@ -19,6 +19,9 @@
     <ClCompile Include="gamelogic\Event.cpp">
       <Filter>gamelogic</Filter>
     </ClCompile>
+    <ClCompile Include="gamelogic\EventHandler.cpp">
+      <Filter>gamelogic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core\CardAreaType.h">
@@ -43,6 +46,9 @@
       <Filter>gamelogic</Filter>
     </ClInclude>
     <ClInclude Include="gamelogic\EventType.h">
+      <Filter>gamelogic</Filter>
+    </ClInclude>
+    <ClInclude Include="gamelogic\EventHandler.h">
       <Filter>gamelogic</Filter>
     </ClInclude>
   </ItemGroup>
