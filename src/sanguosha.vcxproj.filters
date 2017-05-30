@@ -17,4 +17,12 @@
   <ItemGroup>
     <ClCompile Include="main.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="core\CardAreaType.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="core\CardMoveDirection.h">
+      <Filter>core</Filter>
+    </ClInclude>
+  </ItemGroup>
 </Project>

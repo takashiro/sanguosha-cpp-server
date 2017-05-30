@@ -20,19 +20,9 @@ takashiro@qq.com
 
 #pragma once
 
-enum CardAreaType
+enum CardMoveDirection
 {
-	Unknown,
-
-	Hand,
-	Equip,
-	DelayedTrick,
-	Judge,
-
-	DrawPile,
-	DiscardPile,
-
-	Special,
-	Table,
-	Wugu
+	Undefined = 0,
+	Top = 0x1,
+	Bottom = 0x2
 };
