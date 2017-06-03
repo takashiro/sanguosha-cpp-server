@@ -57,6 +57,8 @@ public:
 	Card(Suit suit = Suit::None, int number = 0);
 	virtual Card *clone() const = 0;
 
+	virtual bool is(const char *name) const = 0;
+
 	uint id() const { return m_id; }
 	bool isVirtual() const { return id() == 0; }
 	uint effectiveId() const;

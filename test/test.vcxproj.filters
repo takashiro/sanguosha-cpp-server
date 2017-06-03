@@ -11,7 +11,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="test.cpp">
+    <ClCompile Include="cardpatterntest.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>

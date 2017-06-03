@@ -1,36 +1,29 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26403.3
+VisualStudioVersion = 15.0.26430.4
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "sanguosha", "src\sanguosha.vcxproj", "{068733AB-8684-4148-A7CB-3F916116A4A9}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "unit-test", "test\test.vcxproj", "{27D9DBEA-E07A-4E1B-95C0-8CDD8E407DF8}"
+	ProjectSection(ProjectDependencies) = postProject
+		{068733AB-8684-4148-A7CB-3F916116A4A9} = {068733AB-8684-4148-A7CB-3F916116A4A9}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
-		Debug|x86 = Debug|x86
 		Release|x64 = Release|x64
-		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{068733AB-8684-4148-A7CB-3F916116A4A9}.Debug|x64.ActiveCfg = Debug|x64
 		{068733AB-8684-4148-A7CB-3F916116A4A9}.Debug|x64.Build.0 = Debug|x64
-		{068733AB-8684-4148-A7CB-3F916116A4A9}.Debug|x86.ActiveCfg = Debug|Win32
-		{068733AB-8684-4148-A7CB-3F916116A4A9}.Debug|x86.Build.0 = Debug|Win32
 		{068733AB-8684-4148-A7CB-3F916116A4A9}.Release|x64.ActiveCfg = Release|x64
 		{068733AB-8684-4148-A7CB-3F916116A4A9}.Release|x64.Build.0 = Release|x64
-		{068733AB-8684-4148-A7CB-3F916116A4A9}.Release|x86.ActiveCfg = Release|Win32
-		{068733AB-8684-4148-A7CB-3F916116A4A9}.Release|x86.Build.0 = Release|Win32
 		{27D9DBEA-E07A-4E1B-95C0-8CDD8E407DF8}.Debug|x64.ActiveCfg = Debug|x64
 		{27D9DBEA-E07A-4E1B-95C0-8CDD8E407DF8}.Debug|x64.Build.0 = Debug|x64
-		{27D9DBEA-E07A-4E1B-95C0-8CDD8E407DF8}.Debug|x86.ActiveCfg = Debug|Win32
-		{27D9DBEA-E07A-4E1B-95C0-8CDD8E407DF8}.Debug|x86.Build.0 = Debug|Win32
 		{27D9DBEA-E07A-4E1B-95C0-8CDD8E407DF8}.Release|x64.ActiveCfg = Release|x64
 		{27D9DBEA-E07A-4E1B-95C0-8CDD8E407DF8}.Release|x64.Build.0 = Release|x64
-		{27D9DBEA-E07A-4E1B-95C0-8CDD8E407DF8}.Release|x86.ActiveCfg = Release|Win32
-		{27D9DBEA-E07A-4E1B-95C0-8CDD8E407DF8}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
