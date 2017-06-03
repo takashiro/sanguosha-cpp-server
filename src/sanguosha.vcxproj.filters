@@ -31,6 +31,9 @@
     <ClCompile Include="core\Card.cpp">
       <Filter>core</Filter>
     </ClCompile>
+    <ClCompile Include="core\Skill.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core\CardAreaType.h">
@@ -76,6 +79,9 @@
       <Filter>core</Filter>
     </ClInclude>
     <ClInclude Include="core\Card.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="core\Skill.h">
       <Filter>core</Filter>
     </ClInclude>
   </ItemGroup>
