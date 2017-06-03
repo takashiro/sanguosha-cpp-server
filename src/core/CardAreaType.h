@@ -20,7 +20,7 @@ takashiro@qq.com
 
 #pragma once
 
-enum CardAreaType
+enum class CardAreaType
 {
 	Unknown,
 
