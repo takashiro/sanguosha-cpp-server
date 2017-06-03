@@ -163,6 +163,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="core\CardArea.cpp" />
+    <ClCompile Include="core\Player.cpp" />
     <ClCompile Include="gamelogic\Event.cpp" />
     <ClCompile Include="gamelogic\EventHandler.cpp" />
     <ClCompile Include="main.cpp">
@@ -181,13 +183,17 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="core\CardArea.h" />
     <ClInclude Include="core\CardAreaType.h" />
     <ClInclude Include="core\CardColor.h" />
     <ClInclude Include="core\CardMoveDirection.h" />
     <ClInclude Include="core\CardSuit.h" />
+    <ClInclude Include="core\CardFilter.h" />
     <ClInclude Include="core\CardType.h" />
     <ClInclude Include="core\common.h" />
     <ClInclude Include="core\Gender.h" />
+    <ClInclude Include="core\Player.h" />
+    <ClInclude Include="core\PlayerPhase.h" />
     <ClInclude Include="gamelogic\Event.h" />
     <ClInclude Include="gamelogic\EventHandler.h" />
     <ClInclude Include="gamelogic\EventType.h" />
