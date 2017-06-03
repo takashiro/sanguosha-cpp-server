@@ -187,6 +187,7 @@
     <ClInclude Include="core\CardSuit.h" />
     <ClInclude Include="core\CardType.h" />
     <ClInclude Include="core\common.h" />
+    <ClInclude Include="core\Gender.h" />
     <ClInclude Include="gamelogic\Event.h" />
     <ClInclude Include="gamelogic\EventHandler.h" />
     <ClInclude Include="gamelogic\EventType.h" />

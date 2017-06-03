@@ -51,5 +51,8 @@
     <ClInclude Include="gamelogic\EventHandler.h">
       <Filter>gamelogic</Filter>
     </ClInclude>
+    <ClInclude Include="core\Gender.h">
+      <Filter>core</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
