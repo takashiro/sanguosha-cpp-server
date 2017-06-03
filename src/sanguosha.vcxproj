@@ -163,6 +163,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="core\Card.cpp" />
     <ClCompile Include="core\CardArea.cpp" />
     <ClCompile Include="core\Player.cpp" />
     <ClCompile Include="gamelogic\Event.cpp" />
@@ -183,6 +184,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="core\Card.h" />
     <ClInclude Include="core\CardArea.h" />
     <ClInclude Include="core\CardAreaType.h" />
     <ClInclude Include="core\CardColor.h" />

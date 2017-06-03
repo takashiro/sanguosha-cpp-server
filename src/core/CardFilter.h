@@ -20,12 +20,16 @@ takashiro@qq.com
 
 #pragma once
 
-enum class CardSuit
-{
-	None,
+#include <vector>
 
-	Spade,
-	Heart,
-	Club,
-	Diamond
+class Player;
+class Card;
+
+class CardFilter
+{
+public:
+	virtual bool targetFilter(const Card *card, const std::vector<const Player *> &selected, const Player *toSelect, const Player *source) const = 0;
+	virtual int extraDistanceLimit(const Card *card, const std::vector<const Player *> &selected, const Player *toSelect, const Player *source) const = 0;
+	virtual int extraMaxTargetNum(const Card *card, const std::vector<const Player *> &selected, const Player *toSelect, const Player *source) const = 0;
+	virtual int extraUseNum(const Card *card, const Player *player) const = 0;
 };
