@@ -100,6 +100,7 @@
     <ClCompile Include="gamelogic\cmd.cpp" />
     <ClCompile Include="gamelogic\Event.cpp" />
     <ClCompile Include="gamelogic\EventHandler.cpp" />
+    <ClCompile Include="gamelogic\GameMode.cpp" />
     <ClCompile Include="main.cpp">
       <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</CompileAsManaged>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -130,6 +131,7 @@
     <ClInclude Include="gamelogic\Event.h" />
     <ClInclude Include="gamelogic\EventHandler.h" />
     <ClInclude Include="gamelogic\EventType.h" />
+    <ClInclude Include="gamelogic\GameMode.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
