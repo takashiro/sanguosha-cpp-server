@@ -43,6 +43,9 @@
     <ClCompile Include="core\Package.cpp">
       <Filter>core</Filter>
     </ClCompile>
+    <ClCompile Include="gamelogic\cmd.cpp">
+      <Filter>gamelogic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core\CardAreaType.h">
@@ -101,6 +104,9 @@
     </ClInclude>
     <ClInclude Include="core\Package.h">
       <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="gamelogic\cmd.h">
+      <Filter>gamelogic</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
