@@ -94,6 +94,7 @@
     <ClCompile Include="core\CardArea.cpp" />
     <ClCompile Include="core\CardPattern.cpp" />
     <ClCompile Include="core\General.cpp" />
+    <ClCompile Include="core\Package.cpp" />
     <ClCompile Include="core\Player.cpp" />
     <ClCompile Include="core\Skill.cpp" />
     <ClCompile Include="gamelogic\Event.cpp" />
@@ -120,6 +121,7 @@
     <ClInclude Include="core\common.h" />
     <ClInclude Include="core\Gender.h" />
     <ClInclude Include="core\General.h" />
+    <ClInclude Include="core\Package.h" />
     <ClInclude Include="core\Player.h" />
     <ClInclude Include="core\PlayerPhase.h" />
     <ClInclude Include="core\Skill.h" />

@@ -40,6 +40,9 @@
     <ClCompile Include="core\General.cpp">
       <Filter>core</Filter>
     </ClCompile>
+    <ClCompile Include="core\Package.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core\CardAreaType.h">
@@ -94,6 +97,9 @@
       <Filter>core</Filter>
     </ClInclude>
     <ClInclude Include="core\General.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="core\Package.h">
       <Filter>core</Filter>
     </ClInclude>
   </ItemGroup>
