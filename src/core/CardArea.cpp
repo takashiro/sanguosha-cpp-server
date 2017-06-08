@@ -25,6 +25,7 @@ takashiro@qq.com
 #include "Card.h"
 #include "Player.h"
 
+#include <algorithm>
 #include <random>
 #include <vector>
 
@@ -61,26 +62,19 @@ bool CardArea::add(const std::vector<Card *> &cards, Direction direction)
 {
     int num = size();
     if (direction == Top) {
-		std::deque<Card *>::iterator iter = m_cards.begin();
+		size_t pos = 0;
         for (size_t i = 0; i < cards.size(); i++) {
             Card *card = cards.at(i);
             if (card) {
-				bool contains = false;
-				for (Card *current : m_cards) {
-					if (current == card) {
-						contains = true;
-						break;
-					}
-				}
-                if (contains)
+                if (std::find(m_cards.begin(), m_cards.end(), card) != m_cards.end())
                     continue;
                 if (!keepVirtualCard() && card->isVirtual()) {
                     delete card;
                     continue;
                 }
             }
-            m_cards.insert(iter, card);
-			iter++;
+            m_cards.insert(m_cards.begin() + pos, card);
+			pos++;
         }
     } else {
         for (Card *card : cards) {
@@ -111,16 +105,14 @@ bool CardArea::add(const std::vector<Card *> &cards, Direction direction)
 
 bool CardArea::remove(Card *card)
 {
-	for (std::deque<Card *>::iterator i = m_cards.begin(); i != m_cards.end(); i++) {
-		if (*i == card) {
-			m_cards.erase(i);
-			if (m_changeSignal) {
-				m_changeSignal();
-				return true;
-			}
+	auto i = std::find(m_cards.begin(), m_cards.end(), card);
+	if (i != m_cards.end()) {
+		m_cards.erase(i);
+		if (m_changeSignal) {
+			m_changeSignal();
 		}
+		return true;
 	}
-
     return false;
 }
 
@@ -128,11 +120,9 @@ bool CardArea::remove(const std::vector<Card *> &cards)
 {
     int num = size();
 	for (Card *card : cards) {
-		for (std::deque<Card *>::iterator i = m_cards.begin(); i != m_cards.end(); i++) {
-			if (*i == card) {
-				m_cards.erase(i);
-				break;
-			}
+		auto i = std::find(m_cards.begin(), m_cards.end(), card);
+		if (i != m_cards.end()) {
+			m_cards.erase(i);
 		}
 	}
 
