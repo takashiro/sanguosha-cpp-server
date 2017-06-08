@@ -23,6 +23,7 @@ takashiro@qq.com
 #include "common.h"
 #include "CardFilter.h"
 #include "PlayerPhase.h"
+#include "SkillAreaType.h"
 
 #include <Json.h>
 
@@ -33,24 +34,16 @@ takashiro@qq.com
 class Card;
 class CardArea;
 class EventHandler;
-class SanguoshaDriver;
 class General;
 class Skill;
+class SkillArea;
 
 class Player
 {
 public:
 	using Phase = PlayerPhase;
 
-	enum SkillArea
-	{
-		UnknownSkillArea,
-		HeadSkillArea,
-		DeputySkillArea,
-		AcquiredSkillArea
-	};
-
-	Player(SanguoshaDriver *driver, uint id);
+	Player(uint id);
 	~Player();
 
 	uint id() const { return m_id; }
@@ -174,13 +167,15 @@ public:
 	void removeCardFilter(const CardFilter *filter);
 	const std::vector<const CardFilter *> &getCardFilters() const { return m_cardFilters; }
 
-	void addSkill(const Skill *skill, SkillArea area = AcquiredSkillArea);
+	void addSkill(const Skill *skill, SkillAreaType area = SkillAreaType::Acquired);
 	void removeSkill(const Skill *skill);
-	void removeSkill(const Skill *skill, SkillArea area);
+	void removeSkill(const Skill *skill, SkillAreaType area);
 	std::vector<const Skill *> skills() const;
-	const std::vector<const Skill *> &headSkills() const { return m_headSkills; }
-	const std::vector<const Skill *> &deputySkills() const { return m_deputySkills; }
-	const std::vector<const Skill *> &acquiredSkills() const { return m_acquiredSkills; }
+	const SkillArea *headSkillArea() const { return m_headSkillArea; }
+	const SkillArea *deputySkillArea() const { return m_deputySkillArea; }
+	const SkillArea *acquiredSkillArea() const { return m_acquiredSkillArea; }
+
+	const Skill *getSkill(uint id) const;
 
 	const std::map<const Skill *, int> &skillHistory() const { return m_skillHistory; }
 	void clearSkillHistory() { m_skillHistory.clear(); }
@@ -190,7 +185,6 @@ public:
 	std::map<std::string, KA_IMPORT Json> tag;
 
 protected:
-	SanguoshaDriver *m_driver;
 	uint m_id;
 	int m_hp;
 	int m_maxHp;
@@ -224,9 +218,9 @@ protected:
 	CardArea *m_delayedTrickArea;
 	CardArea *m_judgeCards;
 
-	std::vector<const Skill *> m_headSkills;
-	std::vector<const Skill *> m_deputySkills;
-	std::vector<const Skill *> m_acquiredSkills;
+	SkillArea *m_headSkillArea;
+	SkillArea *m_deputySkillArea;
+	SkillArea *m_acquiredSkillArea;
 	std::vector<const CardFilter *> m_cardFilters;
 
 	std::map<const Skill *, int> m_skillHistory;

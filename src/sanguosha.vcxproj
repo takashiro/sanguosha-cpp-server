@@ -97,6 +97,7 @@
     <ClCompile Include="core\Package.cpp" />
     <ClCompile Include="core\Player.cpp" />
     <ClCompile Include="core\Skill.cpp" />
+    <ClCompile Include="core\SkillArea.cpp" />
     <ClCompile Include="gamelogic\cmd.cpp" />
     <ClCompile Include="gamelogic\Event.cpp" />
     <ClCompile Include="gamelogic\EventHandler.cpp" />
@@ -127,6 +128,8 @@
     <ClInclude Include="core\Player.h" />
     <ClInclude Include="core\PlayerPhase.h" />
     <ClInclude Include="core\Skill.h" />
+    <ClInclude Include="core\SkillArea.h" />
+    <ClInclude Include="core\SkillAreaType.h" />
     <ClInclude Include="gamelogic\cmd.h" />
     <ClInclude Include="gamelogic\Event.h" />
     <ClInclude Include="gamelogic\EventHandler.h" />

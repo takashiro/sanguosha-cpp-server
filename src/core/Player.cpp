@@ -22,12 +22,13 @@ takashiro@qq.com
 
 #include "CardArea.h"
 #include "CardAreaType.h"
+#include "Skill.h"
+#include "SkillArea.h"
 
 #include <algorithm>
 
-Player::Player(SanguoshaDriver *driver, uint id)
-	: m_driver(driver)
-	, m_id(id)
+Player::Player(uint id)
+	: m_id(id)
 	, m_hp(0)
 	, m_maxHp(0)
 	, m_alive(true)
@@ -50,21 +51,28 @@ Player::Player(SanguoshaDriver *driver, uint id)
 	, m_deputyGeneralShown(false)
 	, m_extraOutDistance(0)
 	, m_extraInDistance(0)
+	, m_handcardArea(new CardArea(CardAreaType::Hand, this))
+	, m_equipArea(new CardArea(CardAreaType::Equip, this))
+	, m_delayedTrickArea(new CardArea(CardAreaType::DelayedTrick, this))
+	, m_judgeCards(new CardArea(CardAreaType::Judge, this))
+	, m_headSkillArea(new SkillArea(SkillAreaType::Head))
+	, m_deputySkillArea(new SkillArea(SkillAreaType::Deputy))
+	, m_acquiredSkillArea(new SkillArea(SkillAreaType::Acquired))
 {
-	m_handcardArea = new CardArea(CardAreaType::Hand, this);
+
 	m_handcardArea->setSignal([this] () {
 		m_handcardNum = m_handcardArea->size();
 	});
-	m_equipArea = new CardArea(CardAreaType::Equip, this);
 	m_equipArea->setKeepVirtualCard(true);
-	m_delayedTrickArea = new CardArea(CardAreaType::DelayedTrick, this);
 	m_delayedTrickArea->setKeepVirtualCard(true);
-	m_judgeCards = new CardArea(CardAreaType::Judge, this);
 	m_judgeCards->setKeepVirtualCard(true);
 }
 
 Player::~Player()
 {
+	delete m_acquiredSkillArea;
+	delete m_deputySkillArea;
+	delete m_headSkillArea;
 	delete m_handcardArea;
 	delete m_equipArea;
 	delete m_delayedTrickArea;
@@ -247,22 +255,16 @@ void Player::setDying(bool dying)
 
 bool Player::hasSkill(const Skill *skill) const
 {
-	for (const Skill *target : m_headSkills) {
-		if (target == skill) {
-			return true;
-		}
+	if (m_headSkillArea->contains(skill)) {
+		return true;
 	}
 
-	for (const Skill *target : m_deputySkills) {
-		if (target == skill) {
-			return true;
-		}
+	if (m_deputySkillArea->contains(skill)) {
+		return true;
 	}
 
-	for (const Skill *target : m_acquiredSkills) {
-		if (target == skill) {
-			return true;
-		}
+	if (m_acquiredSkillArea->contains(skill)) {
+		return true;
 	}
 
 	return false;
@@ -271,24 +273,20 @@ bool Player::hasSkill(const Skill *skill) const
 bool Player::hasShownSkill(const Skill *skill) const
 {
 	if (hasShownHeadGeneral()) {
-		for (const Skill *target : m_headSkills) {
-			if (target == skill) {
-				return true;
-			}
-		}
-	}
-	if (hasShownDeputyGeneral()) {
-		for (const Skill *target : m_deputySkills) {
-			if (target == skill) {
-				return true;
-			}
-		}
-	}
-	for (const Skill *target : m_acquiredSkills) {
-		if (target == skill) {
+		if (m_headSkillArea->contains(skill)) {
 			return true;
 		}
 	}
+	if (hasShownDeputyGeneral()) {
+		if (m_deputySkillArea->contains(skill)) {
+			return true;
+		}
+	}
+
+	if (m_acquiredSkillArea->contains(skill)) {
+		return true;
+	}
+
 	return false;
 }
 
@@ -313,83 +311,84 @@ void Player::addCardFilter(const CardFilter *filter)
 
 void Player::removeCardFilter(const CardFilter *filter)
 {
-	for (std::vector<const CardFilter *>::iterator i = m_cardFilters.begin(); i != m_cardFilters.end(); i++) {
-		if (*i == filter) {
-			m_cardFilters.erase(i);
-			break;
-		}
+	auto i = std::find(m_cardFilters.begin(), m_cardFilters.end(), filter);
+	if (i != m_cardFilters.end()) {
+		m_cardFilters.erase(i);
 	}
 }
 
-void Player::addSkill(const Skill *skill, SkillArea type)
+void Player::addSkill(const Skill *skill, SkillAreaType type)
 {
-	if (type == HeadSkillArea) {
-		m_headSkills.push_back(skill);
-	} else if (type == DeputySkillArea) {
-		m_deputySkills.push_back(skill);
+	if (type == SkillAreaType::Head) {
+		m_headSkillArea->add(skill);
+	} else if (type == SkillAreaType::Deputy) {
+		m_deputySkillArea->add(skill);
 	} else {
-		m_acquiredSkills.push_back(skill);
+		m_acquiredSkillArea->add(skill);
 	}
 }
 
 void Player::removeSkill(const Skill *skill)
 {
-	for (std::vector<const Skill *>::iterator i = m_acquiredSkills.begin(); i != m_acquiredSkills.end(); i++) {
-		if (*i == skill) {
-			m_acquiredSkills.erase(i);
-			return;
-		}
+	std::vector<const Skill *>::iterator i;
+
+	if (m_acquiredSkillArea->remove(skill)) {
+		return;
 	}
-	for (std::vector<const Skill *>::iterator i = m_headSkills.begin(); i != m_headSkills.end(); i++) {
-		if (*i == skill) {
-			m_headSkills.erase(i);
-			return;
-		}
+
+	if (m_headSkillArea->remove(skill)) {
+		return;
 	}
-	for (std::vector<const Skill *>::iterator i = m_deputySkills.begin(); i != m_deputySkills.end(); i++) {
-		if (*i == skill) {
-			m_deputySkills.erase(i);
-			return;
-		}
-	}
+
+	m_deputySkillArea->remove(skill);
 }
 
-void Player::removeSkill(const Skill *skill, SkillArea type)
+void Player::removeSkill(const Skill *skill, SkillAreaType type)
 {
-	if (type == HeadSkillArea) {
-		for (std::vector<const Skill *>::iterator i = m_headSkills.begin(); i != m_headSkills.end(); i++) {
-			if (*i == skill) {
-				m_headSkills.erase(i);
-				break;
-			}
-		}
-	} else if (type == DeputySkillArea) {
-		for (std::vector<const Skill *>::iterator i = m_deputySkills.begin(); i != m_deputySkills.end(); i++) {
-			if (*i == skill) {
-				m_deputySkills.erase(i);
-				break;
-			}
-		}
+	if (type == SkillAreaType::Head) {
+		m_headSkillArea->remove(skill);
+	} else if (type == SkillAreaType::Deputy) {
+		m_deputySkillArea->remove(skill);
 	} else {
-		for (std::vector<const Skill *>::iterator i = m_acquiredSkills.begin(); i != m_acquiredSkills.end(); i++) {
-			if (*i == skill) {
-				m_acquiredSkills.erase(i);
-				break;
-			}
-		}
+		m_acquiredSkillArea->remove(skill);
 	}
 }
 
 std::vector<const Skill *> Player::skills() const
 {
-	std::vector<const Skill *> result = m_headSkills;
-	result.reserve(m_headSkills.size() + m_deputySkills.size() + m_acquiredSkills.size());
-	for (const Skill *skill : m_deputySkills) {
-		result.push_back(skill);
-	}
-	for (const Skill *skill : m_acquiredSkills) {
-		result.push_back(skill);
-	}
+	std::vector<const Skill *> result;
+	result.resize(m_headSkillArea->size() + m_deputySkillArea->size() + m_acquiredSkillArea->size());
+
+	auto from = result.begin();
+	const std::vector<const Skill *> &head_skills = m_headSkillArea->skills();
+	from = std::copy(head_skills.begin(), head_skills.end(), from);
+	const std::vector<const Skill *> &deputy_skills = m_deputySkillArea->skills();
+	from = std::copy(deputy_skills.begin(), deputy_skills.end(), from);
+	const std::vector<const Skill *> &acquired_skills = m_acquiredSkillArea->skills();
+	from = std::copy(acquired_skills.begin(), acquired_skills.end(), from);
+
 	return result;
 }
 
+const Skill *Player::getSkill(uint id) const
+{
+	const std::vector<const Skill *> &head_skills = m_headSkillArea->skills();
+	for (const Skill *skill : head_skills) {
+		if (skill->id() == id)
+			return skill;
+	}
+
+	const std::vector<const Skill *> &deputy_skills = m_deputySkillArea->skills();
+	for (const Skill *skill : deputy_skills) {
+		if (skill->id() == id)
+			return skill;
+	}
+
+	const std::vector<const Skill *> &acqured_skills = m_acquiredSkillArea->skills();
+	for (const Skill *skill : acqured_skills) {
+		if (skill->id() == id)
+			return skill;
+	}
+
+	return nullptr;
+}

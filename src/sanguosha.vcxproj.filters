@@ -49,6 +49,9 @@
     <ClCompile Include="gamelogic\GameMode.cpp">
       <Filter>gamelogic</Filter>
     </ClCompile>
+    <ClCompile Include="core\SkillArea.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core\CardAreaType.h">
@@ -113,6 +116,12 @@
     </ClInclude>
     <ClInclude Include="gamelogic\GameMode.h">
       <Filter>gamelogic</Filter>
+    </ClInclude>
+    <ClInclude Include="core\SkillAreaType.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="core\SkillArea.h">
+      <Filter>core</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
