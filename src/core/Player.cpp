@@ -22,7 +22,6 @@ takashiro@qq.com
 
 #include "CardArea.h"
 #include "CardAreaType.h"
-#include "Skill.h"
 #include "SkillArea.h"
 
 #include <algorithm>
@@ -368,27 +367,4 @@ std::vector<const Skill *> Player::skills() const
 	from = std::copy(acquired_skills.begin(), acquired_skills.end(), from);
 
 	return result;
-}
-
-const Skill *Player::getSkill(uint id) const
-{
-	const std::vector<const Skill *> &head_skills = m_headSkillArea->skills();
-	for (const Skill *skill : head_skills) {
-		if (skill->id() == id)
-			return skill;
-	}
-
-	const std::vector<const Skill *> &deputy_skills = m_deputySkillArea->skills();
-	for (const Skill *skill : deputy_skills) {
-		if (skill->id() == id)
-			return skill;
-	}
-
-	const std::vector<const Skill *> &acqured_skills = m_acquiredSkillArea->skills();
-	for (const Skill *skill : acqured_skills) {
-		if (skill->id() == id)
-			return skill;
-	}
-
-	return nullptr;
 }

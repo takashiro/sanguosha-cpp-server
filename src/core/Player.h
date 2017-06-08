@@ -175,8 +175,6 @@ public:
 	const SkillArea *deputySkillArea() const { return m_deputySkillArea; }
 	const SkillArea *acquiredSkillArea() const { return m_acquiredSkillArea; }
 
-	const Skill *getSkill(uint id) const;
-
 	const std::map<const Skill *, int> &skillHistory() const { return m_skillHistory; }
 	void clearSkillHistory() { m_skillHistory.clear(); }
 	void addSkillHistory(const Skill *skill) { m_skillHistory[skill]++; }
