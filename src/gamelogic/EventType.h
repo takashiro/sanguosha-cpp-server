@@ -24,6 +24,8 @@ enum EventType
 {
 	InvalidEvent,
 
+	PrepareToStart,
+
 	GameStart,
 	GameFinish,
 

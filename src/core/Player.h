@@ -44,7 +44,7 @@ public:
 	using Phase = PlayerPhase;
 
 	Player(uint id);
-	~Player();
+	virtual ~Player();
 
 	uint id() const { return m_id; }
 

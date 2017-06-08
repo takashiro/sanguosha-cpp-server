@@ -20,13 +20,6 @@ takashiro@qq.com
 
 #pragma once
 
-#include <string>
+#include "GameLogic.h"
 
-class GameConfig
-{
-public:
-	GameConfig();
-
-    std::string mode;
-    int timeout;
-};
+using SanguoshaDriver = GameLogic;

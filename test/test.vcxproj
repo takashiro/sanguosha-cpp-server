@@ -75,7 +75,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <AdditionalLibraryDirectories>$(SolutionDir)obj/sanguosha/$(Platform)/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>karuta.lib;CardPattern.obj;Card.obj;Player.obj;CardArea.obj;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>karuta.lib;CardPattern.obj;Card.obj;Player.obj;CardArea.obj;SkillArea.obj;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -94,7 +94,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalLibraryDirectories>$(SolutionDir)obj/sanguosha/$(Platform)/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>karuta.lib;CardPattern.obj;Card.obj;Player.obj;CardArea.obj;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>karuta.lib;CardPattern.obj;Card.obj;Player.obj;CardArea.obj;SkillArea.obj;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>

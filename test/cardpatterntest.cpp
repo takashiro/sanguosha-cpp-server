@@ -134,7 +134,7 @@ namespace test
 		TEST_METHOD(EquipArea)
 		{
 			TestCard card1;
-			Player player(nullptr, 0);
+			Player player(0);
 			player.equipArea()->add(&card1);
 			TestCard card2;
 			
@@ -146,7 +146,7 @@ namespace test
 		TEST_METHOD(HandCardArea)
 		{
 			TestCard card;
-			Player player(nullptr, 0);
+			Player player(0);
 
 			CardPattern p("test|.|.|hand");
 			assert(!p.match(&player, &card));
