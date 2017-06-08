@@ -166,6 +166,15 @@ Card *CardArea::takeLast()
 	return last;
 }
 
+std::vector<Card *> CardArea::first(int n) const
+{
+	n = std::min(n, static_cast<int>(m_cards.size()));
+	std::vector<Card *> cards;
+	cards.resize(n);
+	std::copy(m_cards.begin(), m_cards.begin() + n, cards.begin());
+	return cards;
+}
+
 std::vector<Card *> CardArea::takeFirst(int n)
 {
 	std::vector<Card *> cards;
@@ -174,6 +183,17 @@ std::vector<Card *> CardArea::takeFirst(int n)
 		cards[i] = takeFirst();
 	}
     return cards;
+}
+
+std::vector<Card *> CardArea::last(int n) const
+{
+	n = std::min(n, static_cast<int>(m_cards.size()));
+	std::vector<Card *> cards;
+	cards.resize(n);
+	auto from = m_cards.begin() + (m_cards.size() - n);
+	auto to = from + n;
+	std::copy(from, to, cards.begin());
+	return cards;
 }
 
 std::vector<Card *> CardArea::takeLast(int n)
