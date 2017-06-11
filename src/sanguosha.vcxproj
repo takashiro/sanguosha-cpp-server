@@ -119,6 +119,7 @@
     </ClCompile>
     <ClCompile Include="mode\BasicMode.cpp" />
     <ClCompile Include="mode\GameRule.cpp" />
+    <ClCompile Include="mode\HegemonyMode.cpp" />
     <ClCompile Include="mode\SystemPackage.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -154,6 +155,7 @@
     <ClInclude Include="gamelogic\structs.h" />
     <ClInclude Include="mode\BasicMode.h" />
     <ClInclude Include="mode\GameRule.h" />
+    <ClInclude Include="mode\HegemonyMode.h" />
     <ClInclude Include="mode\SystemPackage.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
