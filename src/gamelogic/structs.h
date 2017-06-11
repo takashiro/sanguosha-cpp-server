@@ -28,8 +28,10 @@ takashiro@qq.com
 #include "SkillAreaType.h"
 #include "CardPattern.h"
 
+#include <deque>
 #include <vector>
 #include <string>
+
 #include <Json.h>
 
 class Card;
@@ -62,6 +64,7 @@ struct CardsMoveStruct
 
 	CardsMoveStruct &operator << (Card *card) { cards.push_back(card); return *this; }
 	CardsMoveStruct &operator << (std::vector<Card *> &cards);
+	CardsMoveStruct &operator << (std::deque<Card *> &cards);
 
 	bool isRelevant(const ServerPlayer *player) const;
 	KA_IMPORT Json toJson(bool open = false) const;

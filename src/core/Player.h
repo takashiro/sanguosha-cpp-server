@@ -87,10 +87,10 @@ public:
 	void setDrunk(bool drunk);
 	bool isDrunk() const { return m_drunk; }
 
-	std::string kingdom() const { return m_kingdom; }
+	const std::string &kingdom() const { return m_kingdom; }
 	void setKingdom(const std::string &kingdom);
 
-	std::string role() const { return m_role; }
+	const std::string &role() const { return m_role; }
 	void setRole(const std::string &role);
 
 	int attackRange() const { return m_attackRange; }

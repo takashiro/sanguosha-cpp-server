@@ -64,6 +64,14 @@ CardsMoveStruct &CardsMoveStruct::operator << (std::vector<Card *> &cards)
 	return *this;
 }
 
+CardsMoveStruct &CardsMoveStruct::operator << (std::deque<Card *> &cards)
+{
+	for (Card *card : cards) {
+		this->cards.push_back(card);
+	}
+	return *this;
+}
+
 bool CardsMoveStruct::isRelevant(const ServerPlayer *player) const
 {
 	return player == nullptr || player == from.owner || (player == to.owner && to.type != CardAreaType::Special);
