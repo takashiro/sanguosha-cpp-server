@@ -85,6 +85,9 @@
     <ClCompile Include="mode\HegemonyMode.cpp">
       <Filter>mode</Filter>
     </ClCompile>
+    <ClCompile Include="mode\StandardMode.cpp">
+      <Filter>mode</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core\CardAreaType.h">
@@ -187,6 +190,9 @@
       <Filter>mode</Filter>
     </ClInclude>
     <ClInclude Include="mode\HegemonyMode.h">
+      <Filter>mode</Filter>
+    </ClInclude>
+    <ClInclude Include="mode\StandardMode.h">
       <Filter>mode</Filter>
     </ClInclude>
   </ItemGroup>
