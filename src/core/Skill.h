@@ -44,7 +44,7 @@ public:
 		InvalidType,
 		TriggerType,
 		ViewAsType,
-		CardModType
+		ProactiveType
 	};
 
 	Skill(const std::string &name);

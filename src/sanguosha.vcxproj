@@ -107,6 +107,7 @@
     <ClCompile Include="gamelogic\GameLogic.cpp" />
     <ClCompile Include="gamelogic\GameMode.cpp" />
     <ClCompile Include="gamelogic\ServerPlayer.cpp" />
+    <ClCompile Include="gamelogic\skills.cpp" />
     <ClCompile Include="gamelogic\structs.cpp" />
     <ClCompile Include="main.cpp">
       <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</CompileAsManaged>
@@ -146,6 +147,7 @@
     <ClInclude Include="gamelogic\GameLogic.h" />
     <ClInclude Include="gamelogic\GameMode.h" />
     <ClInclude Include="gamelogic\ServerPlayer.h" />
+    <ClInclude Include="gamelogic\skills.h" />
     <ClInclude Include="gamelogic\structs.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
