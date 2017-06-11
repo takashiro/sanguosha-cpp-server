@@ -76,6 +76,9 @@
     <ClCompile Include="mode\GameRule.cpp">
       <Filter>mode</Filter>
     </ClCompile>
+    <ClCompile Include="mode\BasicMode.cpp">
+      <Filter>mode</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core\CardAreaType.h">
@@ -169,6 +172,9 @@
       <Filter>gamelogic</Filter>
     </ClInclude>
     <ClInclude Include="mode\GameRule.h">
+      <Filter>mode</Filter>
+    </ClInclude>
+    <ClInclude Include="mode\BasicMode.h">
       <Filter>mode</Filter>
     </ClInclude>
   </ItemGroup>
