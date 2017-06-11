@@ -24,5 +24,6 @@ takashiro@qq.com
 
 class BasicMode : public GameMode
 {
+protected:
 	BasicMode();
 };
