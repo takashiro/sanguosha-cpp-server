@@ -264,6 +264,30 @@ CardModSkill::CardModSkill(const std::string &name)
 	m_events.insert(SkillRemoved);
 }
 
+bool CardModSkill::targetFilter(const Card *card, const std::vector<const Player *> &selected, const Player *to_select, const Player *source) const
+{
+	KA_UNUSED(card, selected, to_select, source);
+	return false;
+}
+
+int CardModSkill::extraDistanceLimit(const Card *card, const std::vector<const Player *> &selected, const Player *to_select, const Player *source) const
+{
+	KA_UNUSED(card, selected, to_select, source);
+	return 0;
+}
+
+int CardModSkill::extraMaxTargetNum(const Card *card, const std::vector<const Player *> &selected, const Player *to_select, const Player *source) const
+{
+	KA_UNUSED(card, selected, to_select, source);
+	return 0;
+}
+
+int CardModSkill::extraUseNum(const Card *card, const Player *player) const
+{
+	KA_UNUSED(card, player);
+	return 0;
+}
+
 bool CardModSkill::effect(GameLogic *, EventType event, ServerPlayer *target, void *data, ServerPlayer *invoker) const
 {
 	if (event == SkillAdded) {

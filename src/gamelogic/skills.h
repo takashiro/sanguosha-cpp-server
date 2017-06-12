@@ -75,7 +75,7 @@ class Card;
 template<typename T>
 static bool CheckAvailability(const Player *self)
 {
-	T *card = new T(T::NoSuit, 0);
+	T *card = new T(CardSuit::None, 0);
 	bool result = card->isAvailable(self);
 	delete card;
 	return result;
@@ -146,6 +146,11 @@ class CardModSkill : public TriggerSkill, public CardFilter
 {
 public:
 	CardModSkill(const std::string &name);
+
+	bool targetFilter(const Card *card, const std::vector<const Player *> &selected, const Player *to_select, const Player *source) const override;
+	int extraDistanceLimit(const Card *card, const std::vector<const Player *> &selected, const Player *to_select, const Player *source) const override;
+	int extraMaxTargetNum(const Card *card, const std::vector<const Player *> &selected, const Player *to_select, const Player *source) const override;
+	int extraUseNum(const Card *card, const Player *player) const override;
 
 	bool effect(GameLogic *, EventType event, ServerPlayer *target, void *data, ServerPlayer *invoker) const final override;
 };
