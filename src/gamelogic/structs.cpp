@@ -56,7 +56,7 @@ CardsMoveStruct::~CardsMoveStruct()
 		delete origin;
 }
 
-CardsMoveStruct &CardsMoveStruct::operator << (std::vector<Card *> &cards)
+CardsMoveStruct &CardsMoveStruct::operator << (const std::vector<Card *> &cards)
 {
 	for (Card *card : cards) {
 		this->cards.push_back(card);
@@ -64,7 +64,7 @@ CardsMoveStruct &CardsMoveStruct::operator << (std::vector<Card *> &cards)
 	return *this;
 }
 
-CardsMoveStruct &CardsMoveStruct::operator << (std::deque<Card *> &cards)
+CardsMoveStruct &CardsMoveStruct::operator << (const std::deque<Card *> &cards)
 {
 	for (Card *card : cards) {
 		this->cards.push_back(card);

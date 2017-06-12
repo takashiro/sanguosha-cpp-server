@@ -63,8 +63,8 @@ struct CardsMoveStruct
 	~CardsMoveStruct();
 
 	CardsMoveStruct &operator << (Card *card) { cards.push_back(card); return *this; }
-	CardsMoveStruct &operator << (std::vector<Card *> &cards);
-	CardsMoveStruct &operator << (std::deque<Card *> &cards);
+	CardsMoveStruct &operator << (const std::vector<Card *> &cards);
+	CardsMoveStruct &operator << (const std::deque<Card *> &cards);
 
 	bool isRelevant(const ServerPlayer *player) const;
 	KA_IMPORT Json toJson(bool open = false) const;
@@ -86,7 +86,7 @@ struct CardUseStruct
 	bool isNullified;
 	bool addHistory;
 	bool isHandCard;
-	KA_IMPORT Json extra;
+	void *extra;
 
 	CardUseStruct();
 };
