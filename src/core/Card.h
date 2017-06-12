@@ -57,7 +57,7 @@ public:
 	Card(Suit suit = Suit::None, int number = 0);
 	virtual Card *clone() const = 0;
 
-	virtual bool is(const char *name) const = 0;
+	bool is(const std::string &name) const;
 
 	uint id() const { return m_id; }
 	bool isVirtual() const { return id() == 0; }
@@ -130,6 +130,8 @@ public:
 	KA_IMPORT JsonObject toJson() const;
 
 protected:
+	virtual bool inherits(const std::string &name) const { KA_UNUSED(name); return false; }
+
 	uint m_id;
 	std::string m_name;
 	Suit m_suit;
@@ -151,7 +153,20 @@ protected:
 	std::set<std::string> m_flags;
 };
 
-#define SGS_CARD_CLONE(classname) Card *clone() const override\
+#define SGS_CARD_CLONE(classname) \
+public:\
+Card *clone() const override\
 {\
 	return new classname(suit(), number());\
 }
+
+#define SGS_CARD_HIERACHY(classname, parent) \
+protected:\
+bool inherits(const std::string &name) const override\
+{\
+	return name == #classname || parent::inherits(name);\
+}
+
+#define SGS_CARD(classname, parent) \
+	SGS_CARD_CLONE(classname)\
+	SGS_CARD_HIERACHY(classname, parent)

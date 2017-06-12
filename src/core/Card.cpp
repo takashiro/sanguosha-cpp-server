@@ -46,6 +46,15 @@ Card::Card(Suit suit, int number)
 {
 }
 
+bool Card::is(const std::string &name) const
+{
+	if (m_name == name) {
+		return true;
+	}
+
+	return inherits(name);
+}
+
 uint Card::effectiveId() const
 {
 	if (!isVirtual())

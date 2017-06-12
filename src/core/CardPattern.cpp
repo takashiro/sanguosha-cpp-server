@@ -119,7 +119,7 @@ bool CardPattern::matchOne(const Player *player, const Card *card, const Exp &ex
 		}
 
 		if (type.front() != '^') {
-			if (!card->is(type.c_str())) {
+			if (!card->is(type)) {
 				return false;
 			}
 		} else {
