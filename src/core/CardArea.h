@@ -38,58 +38,59 @@ class CardArea
 public:
 	using Type = CardAreaType;
 	using Direction = CardMoveDirection;
-    using ChangeSignal = std::function<void()>;
+	using ChangeSignal = std::function<void()>;
 
-    CardArea(Type type, Player *owner = nullptr, const std::string &name = std::string());
-    Type type() const { return m_type; }
-    Player *owner() const { return m_owner; }
-    std::string name() const { return m_name; }
+	CardArea(Type type, Player *owner = nullptr, const std::string &name = std::string());
+	Type type() const { return m_type; }
+	Player *owner() const { return m_owner; }
+	std::string name() const { return m_name; }
 
-    void setSignal(ChangeSignal signal) { m_changeSignal = signal; }
+	void setSignal(ChangeSignal signal) { m_changeSignal = signal; }
 
-    bool keepVirtualCard() const { return m_keepVirtualCard; }
-    void setKeepVirtualCard(bool keep) { m_keepVirtualCard = keep; }
+	bool keepVirtualCard() const { return m_keepVirtualCard; }
+	void setKeepVirtualCard(bool keep) { m_keepVirtualCard = keep; }
 
-    bool add(Card *card, Direction direction = Undefined);
-    bool add(const std::vector<Card *> &cards, Direction direction = Undefined);
-    bool remove(Card *card);
-    bool remove(const std::vector<Card *> &cards);
-    void clear() { m_cards.clear(); }
+	bool add(Card *card, Direction direction = Undefined);
+	bool add(const std::vector<Card *> &cards, Direction direction = Undefined);
+	bool remove(Card *card);
+	bool remove(const std::vector<Card *> &cards);
+	void clear() { m_cards.clear(); }
 
-    Card *findCard(uint id) const;
-    Card *rand() const;
+	Card *findCard(uint id) const;
+	Card *rand() const;
 
-    Card *first() const { return m_cards.front(); }
+	Card *first() const { return m_cards.front(); }
 	Card *takeFirst();
 
-    Card *last() const { return m_cards.back(); }
+	Card *last() const { return m_cards.back(); }
 	Card *takeLast();
 
 	std::vector<Card *> first(int n) const;
-    std::vector<Card *> takeFirst(int n);
+	std::vector<Card *> takeFirst(int n);
 
 	std::vector<Card *> last(int n) const;
-    std::vector<Card *> takeLast(int n);
+	std::vector<Card *> takeLast(int n);
 
-    bool contains(const Card *card) const;
-    bool contains(uint id) const;
+	bool contains(const Card *card) const;
+	bool contains(uint id) const;
+	bool contains(const char *name) const;
 
-    void addVirtualCard(const std::string &name) { m_virtualCards.insert(name); }
-    void removeVirtualCard(const std::string &name) { m_virtualCards.erase(name); }
+	void addVirtualCard(const std::string &name) { m_virtualCards.insert(name); }
+	void removeVirtualCard(const std::string &name) { m_virtualCards.erase(name); }
 
-    std::deque<Card *> &cards() { return m_cards; }
-    const std::deque<Card *> &cards() const { return m_cards; }
+	std::deque<Card *> &cards() { return m_cards; }
+	const std::deque<Card *> &cards() const { return m_cards; }
 
-    int size() const { return static_cast<int>(m_cards.size()); }
+	int size() const { return static_cast<int>(m_cards.size()); }
 
-    KA_IMPORT Json toJson() const;
+	KA_IMPORT Json toJson() const;
 
 private:
-    Type m_type;
-    Player *m_owner;
-    std::string m_name;
-    std::deque<Card *> m_cards;
-    ChangeSignal m_changeSignal;
-    bool m_keepVirtualCard;
-    std::set<std::string> m_virtualCards;
+	Type m_type;
+	Player *m_owner;
+	std::string m_name;
+	std::deque<Card *> m_cards;
+	ChangeSignal m_changeSignal;
+	bool m_keepVirtualCard;
+	std::set<std::string> m_virtualCards;
 };
