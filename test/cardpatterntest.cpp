@@ -19,14 +19,10 @@ namespace test
 			: Card(suit, number)
 		{
 			m_id = 1;
+			m_name = "test";
 		}
 
-		SGS_CARD_CLONE(TestCard)
-
-			bool is(const char *name) const override
-		{
-			return strcmp(name, "test") == 0;
-		}
+		SGS_CARD(TestCard, Card)
 	};
 
 	TEST_CLASS(CardPatternTest)

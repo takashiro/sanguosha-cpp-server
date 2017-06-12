@@ -34,12 +34,14 @@ public:
 
 class BasicCard : public DefaultCard
 {
+	SGS_CARD_HIERACHY(BasicCard, Card)
 public:
 	BasicCard(Suit suit, int number);
 };
 
 class TrickCard : public DefaultCard
 {
+	SGS_CARD_HIERACHY(TrickCard, Card)
 public:
 	enum SubType
 	{
@@ -63,6 +65,7 @@ class Skill;
 
 class EquipCard : public DefaultCard
 {
+	SGS_CARD_HIERACHY(EquipCard, Card)
 public:
 	enum SubType
 	{
@@ -87,6 +90,7 @@ protected:
 
 class GlobalEffect : public TrickCard
 {
+	SGS_CARD_HIERACHY(GlobalEffect, TrickCard)
 public:
 	GlobalEffect(Card::Suit suit, int number);
 
@@ -95,6 +99,7 @@ public:
 
 class AreaOfEffect : public TrickCard
 {
+	SGS_CARD_HIERACHY(AreaOfEffect, TrickCard)
 public:
 	AreaOfEffect(Suit suit, int number);
 
@@ -103,12 +108,14 @@ public:
 
 class SingleTargetTrick : public TrickCard
 {
+	SGS_CARD_HIERACHY(SingleTargetTrick, TrickCard)
 public:
 	SingleTargetTrick(Suit suit, int number);
 };
 
 class DelayedTrick : public TrickCard
 {
+	SGS_CARD_HIERACHY(DelayedTrick, TrickCard)
 public:
 	DelayedTrick(Suit suit, int number);
 
@@ -127,6 +134,7 @@ protected:
 
 class MovableDelayedTrick : public DelayedTrick
 {
+	SGS_CARD_HIERACHY(MovableDelayedTrick, DelayedTrick)
 public:
 	MovableDelayedTrick(Suit suit, int number);
 
@@ -138,6 +146,7 @@ public:
 
 class Weapon : public EquipCard
 {
+	SGS_CARD_HIERACHY(Weapon, EquipCard)
 public:
 	Weapon(Suit suit, int number);
 
@@ -149,18 +158,21 @@ protected:
 
 class Armor : public EquipCard
 {
+	SGS_CARD_HIERACHY(Armor, EquipCard)
 public:
 	Armor(Suit suit, int number);
 };
 
 class Horse : public EquipCard
 {
+	SGS_CARD_HIERACHY(Horse, EquipCard)
 public:
 	Horse(Suit suit, int number);
 };
 
 class OffensiveHorse : public Horse
 {
+	SGS_CARD(OffensiveHorse, Horse)
 public:
 	OffensiveHorse(Suit suit, int number);
 
@@ -172,6 +184,7 @@ protected:
 
 class DefensiveHorse : public Horse
 {
+	SGS_CARD(DefensiveHorse, Horse)
 public:
 	DefensiveHorse(Suit suit, int number);
 
@@ -183,6 +196,7 @@ protected:
 
 class Treasure : public EquipCard
 {
+	SGS_CARD(Treasure, EquipCard)
 public:
 	Treasure(Suit suit, int number);
 };
