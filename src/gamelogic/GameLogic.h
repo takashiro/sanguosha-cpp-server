@@ -45,101 +45,104 @@ class GameLogic : public KA_IMPORT GameDriver
 {
 public:
 	GameLogic();
-    ~GameLogic();
+	~GameLogic();
 
 	void addPlayer(KA_IMPORT User *user) override;
 
 	const GameConfig *config() const { return m_config; }
 
-    const std::vector<const Package *> &packages() const { return m_packages; }
-    void setPackages(const std::vector<const Package *> &packages) { m_packages = packages; }
+	const std::vector<const Package *> &packages() const { return m_packages; }
+	void setPackages(const std::vector<const Package *> &packages) { m_packages = packages; }
 
-    void addEventHandler(const EventHandler *handler);
-    void removeEventHandler(const EventHandler *handler);
+	void addEventHandler(const EventHandler *handler);
+	void removeEventHandler(const EventHandler *handler);
 
 	// Fire game rules only
 	void fire(EventType event, ServerPlayer *target = nullptr, void *data = nullptr);
 	// Trigger all events
-    bool trigger(EventType event, ServerPlayer *target, void *data = nullptr);
+	bool trigger(EventType event, ServerPlayer *target, void *data = nullptr);
 
-    void setCurrentPlayer(ServerPlayer *player) { m_currentPlayer = player; }
-    ServerPlayer *currentPlayer() const { return m_currentPlayer; }
+	void setCurrentPlayer(ServerPlayer *player) { m_currentPlayer = player; }
+	ServerPlayer *currentPlayer() const { return m_currentPlayer; }
 
-    const std::vector<ServerPlayer *> &players() const;
-    ServerPlayer *findPlayer(uint id) const;
+	const std::vector<ServerPlayer *> &players() const;
+	ServerPlayer *findPlayer(uint id) const;
 
-    std::vector<ServerPlayer *> allPlayers(bool includeDead = false) const;
-    std::vector<ServerPlayer *> otherPlayers(ServerPlayer *except, bool includeDead = false) const;
-    void sortByActionOrder(std::vector<ServerPlayer *> &players) const;
+	std::vector<ServerPlayer *> allPlayers(bool includeDead = false) const;
+	std::vector<ServerPlayer *> otherPlayers(ServerPlayer *except, bool includeDead = false) const;
+	int countPlayer(bool include_dead = false) const;
+	int countPlayer(bool(*filter)(ServerPlayer *)) const;
+	void sortByActionOrder(std::vector<ServerPlayer *> &players) const;
 
-    void addExtraTurn(ServerPlayer *player) { m_extraTurns.push_back(player); }
-    const std::list<ServerPlayer *> &extraTurns() const { return m_extraTurns; }
+	void addExtraTurn(ServerPlayer *player) { m_extraTurns.push_back(player); }
+	const std::list<ServerPlayer *> &extraTurns() const { return m_extraTurns; }
 
-    Card *getDrawPileCard();
-    std::vector<Card *> getDrawPileCards(int n);
-    void reshuffleDrawPile();
-    int reshufflingCount() const { return m_reshufflingCount; }
+	Card *getDrawPileCard();
+	std::vector<Card *> getDrawPileCards(int n);
+	void reshuffleDrawPile();
+	int reshufflingCount() const { return m_reshufflingCount; }
 
-    CardArea *drawPile() const { return m_drawPile; }
-    CardArea *discardPile() const { return m_discardPile; }
-    CardArea *table() const { return m_table; }
-    CardArea *wugu() const { return m_wugu; }
+	CardArea *drawPile() const { return m_drawPile; }
+	CardArea *discardPile() const { return m_discardPile; }
+	CardArea *table() const { return m_table; }
+	CardArea *wugu() const { return m_wugu; }
 
-    void moveCards(const CardsMoveStruct &move);
-    void moveCards(std::vector<CardsMoveStruct> &moves);
+	void moveCards(const CardsMoveStruct &move);
+	void moveCards(std::vector<CardsMoveStruct> &moves);
 
-    bool useCard(CardUseStruct &use);
-    bool takeCardEffect(CardEffectStruct &effect);
+	bool useCard(CardUseStruct &use);
+	bool takeCardEffect(CardEffectStruct &effect);
 
-    //It returns false iff the corresponding CardResponded event is broken.
-    bool respondCard(CardResponseStruct &response);
+	//It returns false iff the corresponding CardResponded event is broken.
+	bool respondCard(CardResponseStruct &response);
 
-    void judge(JudgeStruct &judge);
+	void judge(JudgeStruct &judge);
 
-    Card *findCard(uint id) const { return m_cards.at(id); }
-    std::vector<Card *> findCards(const KA_IMPORT Json &data);
+	Card *findCard(uint id) const { return m_cards.at(id); }
+	std::vector<Card *> findCards(const KA_IMPORT Json &data);
 
-    void damage(DamageStruct &damage);
-    void loseHp(ServerPlayer *victim, int lose);
-    void recover(RecoverStruct &recover);
+	void damage(DamageStruct &damage);
+	void loseHp(ServerPlayer *victim, int lose);
+	void recover(RecoverStruct &recover);
 
-    void killPlayer(ServerPlayer *victim, DamageStruct *damage = nullptr);
-    void gameOver(const std::vector<ServerPlayer *> &winners);
+	void killPlayer(ServerPlayer *victim, DamageStruct *damage = nullptr);
+	void gameOver(const std::vector<ServerPlayer *> &winners);
 
-    std::map<uint, std::vector<const General *>> broadcastRequestForGenerals(const std::vector<ServerPlayer *> &players, int num, int limit);
+	std::map<uint, std::vector<const General *>> broadcastRequestForGenerals(const std::vector<ServerPlayer *> &players, int num, int limit);
 
+	void broadcastNotification(cmd command);
 	void broadcastNotification(cmd command, const KA_IMPORT Json &arguments);
 	void broadcastNotification(cmd command, const KA_IMPORT Json &arguments, ServerPlayer *except);
 
 	void broadcastRequest(const std::vector<ServerPlayer *> &players);
 
 protected:
-    void loadMode(const GameMode *mode);
+	void loadMode(const GameMode *mode);
 
-    void prepareToStart();
-    CardArea *findArea(const CardsMoveStruct::Area &area);
-    void filterCardsMove(std::vector<CardsMoveStruct> &moves);
+	void prepareToStart();
+	CardArea *findArea(const CardsMoveStruct::Area &area);
+	void filterCardsMove(std::vector<CardsMoveStruct> &moves);
 
-    void run();
+	void run();
 
 private:
 	GameConfig *m_config;
 
 	std::vector<const EventHandler *> m_rules;
-    std::vector<const EventHandler *> m_handlers[EventTypeCount];
+	std::vector<const EventHandler *> m_handlers[EventTypeCount];
 
-    std::vector<ServerPlayer *> m_players;
-    ServerPlayer *m_currentPlayer;
-    std::list<ServerPlayer *> m_extraTurns;
-    std::vector<const Package *> m_packages;
-    std::map<uint, Card *> m_cards;
-    int m_round;
-    int m_reshufflingCount;
+	std::vector<ServerPlayer *> m_players;
+	ServerPlayer *m_currentPlayer;
+	std::list<ServerPlayer *> m_extraTurns;
+	std::vector<const Package *> m_packages;
+	std::map<uint, Card *> m_cards;
+	int m_round;
+	int m_reshufflingCount;
 
-    CardArea *m_drawPile;
-    CardArea *m_discardPile;
-    CardArea *m_table;
-    CardArea *m_wugu;
+	CardArea *m_drawPile;
+	CardArea *m_discardPile;
+	CardArea *m_table;
+	CardArea *m_wugu;
 
-    std::map<Card *, CardArea *> m_cardPosition;
+	std::map<Card *, CardArea *> m_cardPosition;
 };

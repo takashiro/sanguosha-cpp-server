@@ -310,6 +310,30 @@ std::vector<ServerPlayer *> GameLogic::otherPlayers(ServerPlayer *except, bool i
 	return players;
 }
 
+int GameLogic::countPlayer(bool include_dead) const
+{
+	if (!include_dead) {
+		return countPlayer([] (ServerPlayer *player) {
+			return player->isAlive();
+		});
+	} else {
+		return countPlayer([] (ServerPlayer *player) {
+			return true;
+		});
+	}
+}
+
+int GameLogic::countPlayer(bool(*filter)(ServerPlayer *)) const
+{
+	int count = 0;
+	for (ServerPlayer *player : m_players) {
+		if (filter(player)) {
+			count++;
+		}
+	}
+	return count;
+}
+
 void GameLogic::sortByActionOrder(std::vector<ServerPlayer *> &players) const
 {
 	std::map<ServerPlayer *, size_t> action_order;
@@ -803,6 +827,11 @@ std::map<uint, std::vector<const General *>> GameLogic::broadcastRequestForGener
 	}
 
 	return result;
+}
+
+void GameLogic::broadcastNotification(cmd command)
+{
+	room()->broadcastNotification(static_cast<int>(command));
 }
 
 void GameLogic::broadcastNotification(cmd command, const KA_IMPORT Json &arguments)
