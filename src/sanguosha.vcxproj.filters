@@ -88,6 +88,30 @@
     <ClCompile Include="mode\StandardMode.cpp">
       <Filter>mode</Filter>
     </ClCompile>
+    <ClCompile Include="package\standardpackage.cpp">
+      <Filter>package</Filter>
+    </ClCompile>
+    <ClCompile Include="package\standard-basiccard.cpp">
+      <Filter>package</Filter>
+    </ClCompile>
+    <ClCompile Include="package\standard-equipcard.cpp">
+      <Filter>package</Filter>
+    </ClCompile>
+    <ClCompile Include="package\standard-qun.cpp">
+      <Filter>package</Filter>
+    </ClCompile>
+    <ClCompile Include="package\standard-shu.cpp">
+      <Filter>package</Filter>
+    </ClCompile>
+    <ClCompile Include="package\standard-trickcard.cpp">
+      <Filter>package</Filter>
+    </ClCompile>
+    <ClCompile Include="package\standard-wei.cpp">
+      <Filter>package</Filter>
+    </ClCompile>
+    <ClCompile Include="package\standard-wu.cpp">
+      <Filter>package</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core\CardAreaType.h">
@@ -194,6 +218,18 @@
     </ClInclude>
     <ClInclude Include="mode\StandardMode.h">
       <Filter>mode</Filter>
+    </ClInclude>
+    <ClInclude Include="package\standardpackage.h">
+      <Filter>package</Filter>
+    </ClInclude>
+    <ClInclude Include="package\standard-basiccard.h">
+      <Filter>package</Filter>
+    </ClInclude>
+    <ClInclude Include="package\standard-equipcard.h">
+      <Filter>package</Filter>
+    </ClInclude>
+    <ClInclude Include="package\standard-trickcard.h">
+      <Filter>package</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

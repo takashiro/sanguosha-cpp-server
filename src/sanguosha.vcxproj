@@ -122,6 +122,14 @@
     <ClCompile Include="mode\HegemonyMode.cpp" />
     <ClCompile Include="mode\StandardMode.cpp" />
     <ClCompile Include="mode\SystemPackage.cpp" />
+    <ClCompile Include="package\standard-basiccard.cpp" />
+    <ClCompile Include="package\standard-equipcard.cpp" />
+    <ClCompile Include="package\standard-qun.cpp" />
+    <ClCompile Include="package\standard-shu.cpp" />
+    <ClCompile Include="package\standard-trickcard.cpp" />
+    <ClCompile Include="package\standard-wei.cpp" />
+    <ClCompile Include="package\standard-wu.cpp" />
+    <ClCompile Include="package\standardpackage.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core\Card.h" />
@@ -159,6 +167,10 @@
     <ClInclude Include="mode\HegemonyMode.h" />
     <ClInclude Include="mode\StandardMode.h" />
     <ClInclude Include="mode\SystemPackage.h" />
+    <ClInclude Include="package\standard-basiccard.h" />
+    <ClInclude Include="package\standard-equipcard.h" />
+    <ClInclude Include="package\standard-trickcard.h" />
+    <ClInclude Include="package\standardpackage.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
