@@ -112,6 +112,9 @@
     <ClCompile Include="package\standard-wu.cpp">
       <Filter>package</Filter>
     </ClCompile>
+    <ClCompile Include="package\maneuveringpackage.cpp">
+      <Filter>package</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core\CardAreaType.h">
@@ -229,6 +232,9 @@
       <Filter>package</Filter>
     </ClInclude>
     <ClInclude Include="package\standard-trickcard.h">
+      <Filter>package</Filter>
+    </ClInclude>
+    <ClInclude Include="package\maneuveringpackage.h">
       <Filter>package</Filter>
     </ClInclude>
   </ItemGroup>
