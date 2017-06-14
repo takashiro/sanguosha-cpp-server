@@ -51,7 +51,7 @@ public:
 	virtual ~Skill();
 
 	uint id() const { return m_id; }
-	std::string name() const { return m_name; }
+	const std::string &name() const { return m_name; }
 	Type type() const { return m_type; }
 	int subtype() const { return m_subtype; }
 	Frequency frequency() const { return m_frequency; }
