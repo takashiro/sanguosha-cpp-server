@@ -115,6 +115,21 @@
     <ClCompile Include="package\maneuveringpackage.cpp">
       <Filter>package</Filter>
     </ClCompile>
+    <ClCompile Include="package\hegstandardpackage.cpp">
+      <Filter>package</Filter>
+    </ClCompile>
+    <ClCompile Include="package\hegstandard-qun.cpp">
+      <Filter>package</Filter>
+    </ClCompile>
+    <ClCompile Include="package\hegstandard-shu.cpp">
+      <Filter>package</Filter>
+    </ClCompile>
+    <ClCompile Include="package\hegstandard-wei.cpp">
+      <Filter>package</Filter>
+    </ClCompile>
+    <ClCompile Include="package\hegstandard-wu.cpp">
+      <Filter>package</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core\CardAreaType.h">
@@ -235,6 +250,9 @@
       <Filter>package</Filter>
     </ClInclude>
     <ClInclude Include="package\maneuveringpackage.h">
+      <Filter>package</Filter>
+    </ClInclude>
+    <ClInclude Include="package\hegstandardpackage.h">
       <Filter>package</Filter>
     </ClInclude>
   </ItemGroup>

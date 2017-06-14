@@ -122,6 +122,11 @@
     <ClCompile Include="mode\HegemonyMode.cpp" />
     <ClCompile Include="mode\StandardMode.cpp" />
     <ClCompile Include="mode\SystemPackage.cpp" />
+    <ClCompile Include="package\hegstandard-qun.cpp" />
+    <ClCompile Include="package\hegstandard-shu.cpp" />
+    <ClCompile Include="package\hegstandard-wei.cpp" />
+    <ClCompile Include="package\hegstandard-wu.cpp" />
+    <ClCompile Include="package\hegstandardpackage.cpp" />
     <ClCompile Include="package\maneuveringpackage.cpp" />
     <ClCompile Include="package\standard-basiccard.cpp" />
     <ClCompile Include="package\standard-equipcard.cpp" />
@@ -168,6 +173,7 @@
     <ClInclude Include="mode\HegemonyMode.h" />
     <ClInclude Include="mode\StandardMode.h" />
     <ClInclude Include="mode\SystemPackage.h" />
+    <ClInclude Include="package\hegstandardpackage.h" />
     <ClInclude Include="package\maneuveringpackage.h" />
     <ClInclude Include="package\standard-basiccard.h" />
     <ClInclude Include="package\standard-equipcard.h" />
