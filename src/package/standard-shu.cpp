@@ -90,7 +90,7 @@ public:
 		return targets.size() == 1;
 	}
 
-	void effect(GameLogic *logic, ServerPlayer *from, const std::vector<ServerPlayer *> &to, const std::vector<Card *> &cards) const override
+	void effect(GameLogic *logic, ServerPlayer *from, const std::vector<ServerPlayer *> &to, const std::vector<const Card *> &cards) const override
 	{
 		if (to.empty() || cards.empty())
 			return;
@@ -125,7 +125,7 @@ public:
 		return card->color() == CardColor::Red;
 	}
 
-	Card *viewAs(Card *subcard, const Player *) const override
+	const Card *viewAs(const Card *subcard, const Player *) const override
 	{
 		Slash *slash = new Slash(subcard->suit(), subcard->number());
 		slash->setSkill(this);
@@ -174,14 +174,14 @@ public:
 	{
 		int n = logic->countPlayer(false);
 		n = std::min(n, 5);
-		std::vector<Card *> cards = logic->getDrawPileCards(n);
+		std::vector<const Card *> cards = logic->getDrawPileCards(n);
 
 		std::vector<int> capacities = {5, 5};
 		std::vector<std::string> areaNames = {
 			"cards_on_the_top_of_draw_pile",
 			"cards_on_the_bottom_of_draw_pile"
 		};
-		std::vector<std::vector<Card *>> result = target->askToArrangeCard(cards, capacities, areaNames);
+		std::vector<std::vector<const Card *>> result = target->askToArrangeCard(cards, capacities, areaNames);
 
 		CardArea *drawPile = logic->drawPile();
 		drawPile->remove(cards);
@@ -226,7 +226,7 @@ public:
 		return false;
 	}
 
-	Card *viewAs(Card *subcard, const Player *) const override
+	const Card *viewAs(const Card *subcard, const Player *) const override
 	{
 		Card *card = nullptr;
 		if (subcard->is("Slash"))

@@ -149,7 +149,7 @@ bool ViewAsSkill::isAvailable(const Player *self, const std::string &pattern) co
 	return pattern.empty();
 }
 
-bool ViewAsSkill::isValid(const std::vector<Card *> &cards, const Player *self, const std::string &pattern) const
+bool ViewAsSkill::isValid(const std::vector<const Card *> &cards, const Player *self, const std::string &pattern) const
 {
 	std::vector<const Card *> selected;
 	for (const Card *toSelect : cards) {
@@ -172,7 +172,7 @@ bool OneCardViewAsSkill::viewFilter(const std::vector<const Card *> &selected, c
 	return selected.empty() && viewFilter(card, self, pattern);
 }
 
-Card *OneCardViewAsSkill::viewAs(const std::vector<Card *> &cards, const Player *self) const
+const Card *OneCardViewAsSkill::viewAs(const std::vector<const Card *> &cards, const Player *self) const
 {
 	if (cards.size() == 1)
 		return viewAs(cards.front(), self);
@@ -203,7 +203,7 @@ bool ProactiveSkill::cardFilter(const std::vector<const Card *> &selected, const
 	return false;
 }
 
-bool ProactiveSkill::isValid(const std::vector<Card *> &cards, const Player *source, const std::string &pattern) const
+bool ProactiveSkill::isValid(const std::vector<const Card *> &cards, const Player *source, const std::string &pattern) const
 {
 	std::vector<const Card *> selected;
 	for (const Card *toSelect : cards) {
@@ -248,12 +248,12 @@ bool ProactiveSkill::isValid(const std::vector<const Player *> &targets, const P
 	return playerFeasible(targets, source);
 }
 
-bool ProactiveSkill::cost(GameLogic *, ServerPlayer *, const std::vector<ServerPlayer *> &, const std::vector<Card *> &) const
+bool ProactiveSkill::cost(GameLogic *, ServerPlayer *, const std::vector<ServerPlayer *> &, const std::vector<const Card *> &) const
 {
 	return true;
 }
 
-void ProactiveSkill::effect(GameLogic *, ServerPlayer *, const std::vector<ServerPlayer *> &, const std::vector<Card *> &) const
+void ProactiveSkill::effect(GameLogic *, ServerPlayer *, const std::vector<ServerPlayer *> &, const std::vector<const Card *> &) const
 {
 }
 

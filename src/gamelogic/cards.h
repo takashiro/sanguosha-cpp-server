@@ -27,9 +27,9 @@ class DefaultCard : public Card
 public:
 	DefaultCard(Suit suit, int number);
 
-	void onUse(GameLogic *logic, CardUseStruct &use) override;
-	void use(GameLogic *logic, CardUseStruct &use) override;
-	void complete(GameLogic *logic) override;
+	void onUse(GameLogic *logic, CardUseStruct &use) const override;
+	void use(GameLogic *logic, CardUseStruct &use) const override;
+	void complete(GameLogic *logic) const override;
 };
 
 class BasicCard : public DefaultCard
@@ -57,7 +57,7 @@ public:
 
 	TrickCard(Suit suit, int number);
 
-	void onEffect(GameLogic *logic, CardEffectStruct &effect) override;
+	void onEffect(GameLogic *logic, CardEffectStruct &effect) const override;
 	virtual bool isNullifiable(const CardEffectStruct &effect) const;
 };
 
@@ -78,9 +78,9 @@ public:
 
 	EquipCard(Suit suit, int number);
 
-	void onUse(GameLogic *logic, CardUseStruct &use) override;
-	void use(GameLogic *logic, CardUseStruct &use) override;
-	void complete(GameLogic *) override;
+	void onUse(GameLogic *logic, CardUseStruct &use) const override;
+	void use(GameLogic *logic, CardUseStruct &use) const override;
+	void complete(GameLogic *) const override;
 
 	Skill *skill() const { return m_skill; }
 
@@ -94,7 +94,7 @@ class GlobalEffect : public TrickCard
 public:
 	GlobalEffect(Card::Suit suit, int number);
 
-	void onUse(GameLogic *logic, CardUseStruct &use) override;
+	void onUse(GameLogic *logic, CardUseStruct &use) const override;
 };
 
 class AreaOfEffect : public TrickCard
@@ -103,7 +103,7 @@ class AreaOfEffect : public TrickCard
 public:
 	AreaOfEffect(Suit suit, int number);
 
-	void onUse(GameLogic *logic, CardUseStruct &use) override;
+	void onUse(GameLogic *logic, CardUseStruct &use) const override;
 };
 
 class SingleTargetTrick : public TrickCard
@@ -121,12 +121,12 @@ public:
 
 	bool targetFeasible(const std::vector<const Player *> &selected, const Player *) const override;
 	bool targetFilter(const std::vector<const Player *> &selected, const Player *toSelect, const Player *source) const override;
-	void onUse(GameLogic *logic, CardUseStruct &use) override;
-	void use(GameLogic *logic, CardUseStruct &use) override;
-	void onEffect(GameLogic *logic, CardEffectStruct &effect) override;
-	void effect(GameLogic *logic, CardEffectStruct &effect) override;
+	void onUse(GameLogic *logic, CardUseStruct &use) const override;
+	void use(GameLogic *logic, CardUseStruct &use) const override;
+	void onEffect(GameLogic *logic, CardEffectStruct &effect) const override;
+	void effect(GameLogic *logic, CardEffectStruct &effect) const override;
 
-	virtual void takeEffect(GameLogic *logic, CardEffectStruct &effect) = 0;
+	virtual void takeEffect(GameLogic *logic, CardEffectStruct &effect) const = 0;
 
 protected:
 	std::string m_judgePattern;
@@ -138,9 +138,9 @@ class MovableDelayedTrick : public DelayedTrick
 public:
 	MovableDelayedTrick(Suit suit, int number);
 
-	void onUse(GameLogic *logic, CardUseStruct &use) override;
-	void effect(GameLogic *logic, CardEffectStruct &effect) override;
-	void complete(GameLogic *logic) override;
+	void onUse(GameLogic *logic, CardUseStruct &use) const override;
+	void effect(GameLogic *logic, CardEffectStruct &effect) const override;
+	void complete(GameLogic *logic) const override;
 	bool isAvailable(const Player *player) const override;
 };
 

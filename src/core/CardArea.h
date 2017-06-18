@@ -50,26 +50,26 @@ public:
 	bool keepVirtualCard() const { return m_keepVirtualCard; }
 	void setKeepVirtualCard(bool keep) { m_keepVirtualCard = keep; }
 
-	bool add(Card *card, Direction direction = Undefined);
-	bool add(const std::vector<Card *> &cards, Direction direction = Undefined);
-	bool remove(Card *card);
-	bool remove(const std::vector<Card *> &cards);
+	bool add(const Card *card, Direction direction = Undefined);
+	bool add(const std::vector<const Card *> &cards, Direction direction = Undefined);
+	bool remove(const Card *card);
+	bool remove(const std::vector<const Card *> &cards);
 	void clear() { m_cards.clear(); }
 
-	Card *findCard(uint id) const;
-	Card *rand() const;
+	const Card *findCard(uint id) const;
+	const Card *rand() const;
 
-	Card *first() const { return m_cards.front(); }
-	Card *takeFirst();
+	const Card *first() const { return m_cards.front(); }
+	const Card *takeFirst();
 
-	Card *last() const { return m_cards.back(); }
-	Card *takeLast();
+	const Card *last() const { return m_cards.back(); }
+	const Card *takeLast();
 
-	std::vector<Card *> first(int n) const;
-	std::vector<Card *> takeFirst(int n);
+	std::vector<const Card *> first(int n) const;
+	std::vector<const Card *> takeFirst(int n);
 
-	std::vector<Card *> last(int n) const;
-	std::vector<Card *> takeLast(int n);
+	std::vector<const Card *> last(int n) const;
+	std::vector<const Card *> takeLast(int n);
 
 	bool contains(const Card *card) const;
 	bool contains(uint id) const;
@@ -78,8 +78,8 @@ public:
 	void addVirtualCard(const std::string &name) { m_virtualCards.insert(name); }
 	void removeVirtualCard(const std::string &name) { m_virtualCards.erase(name); }
 
-	std::deque<Card *> &cards() { return m_cards; }
-	const std::deque<Card *> &cards() const { return m_cards; }
+	std::deque<const Card *> &cards() { return m_cards; }
+	const std::deque<const Card *> &cards() const { return m_cards; }
 
 	int size() const { return static_cast<int>(m_cards.size()); }
 
@@ -89,7 +89,7 @@ private:
 	Type m_type;
 	Player *m_owner;
 	std::string m_name;
-	std::deque<Card *> m_cards;
+	std::deque<const Card *> m_cards;
 	ChangeSignal m_changeSignal;
 	bool m_keepVirtualCard;
 	std::set<std::string> m_virtualCards;

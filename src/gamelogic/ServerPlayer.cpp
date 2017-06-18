@@ -60,7 +60,7 @@ void ServerPlayer::drawCards(int n)
 	m_logic->moveCards(move);
 }
 
-void ServerPlayer::recastCard(Card *card)
+void ServerPlayer::recastCard(const Card *card)
 {
 	CardsMoveStruct recast;
 	recast.cards.push_back(card);
@@ -80,7 +80,7 @@ void ServerPlayer::recastCard(Card *card)
 	drawCards(1);
 }
 
-void ServerPlayer::showCard(Card *card)
+void ServerPlayer::showCard(const Card *card)
 {
 	JsonArray card_data;
 	card_data.push_back(card->id());
@@ -91,10 +91,10 @@ void ServerPlayer::showCard(Card *card)
 	m_logic->broadcastNotification(cmd::ShowCard, data);
 }
 
-void ServerPlayer::showCards(const std::vector<Card *> &cards)
+void ServerPlayer::showCards(const std::vector<const Card *> &cards)
 {
 	JsonArray card_data;
-	for(Card *card : cards)
+	for(const Card *card : cards)
 		card_data.push_back(card->id());
 
 	JsonObject data;
@@ -176,7 +176,7 @@ bool ServerPlayer::activate()
 		}
 	}
 
-	std::vector<Card *> cards;
+	std::vector<const Card *> cards;
 	if (reply.find("cards") != reply.end()) {
 		cards = m_logic->findCards(reply.at("cards"));
 	}
@@ -188,7 +188,7 @@ bool ServerPlayer::activate()
 			skill = getSkill(skill_id);
 	}
 
-	Card *card = nullptr;
+	const Card *card = nullptr;
 	if (skill) {
 		//@TO-DO: invoke skill
 	} else {
@@ -295,7 +295,7 @@ Event ServerPlayer::askForTriggerOrder(const EventList &options, bool cancelable
 	return cancelable ? Event() : options.front();
 }
 
-Card *ServerPlayer::askForCard(const std::string &pattern, bool optional)
+const Card *ServerPlayer::askForCard(const std::string &pattern, bool optional)
 {
 	JsonObject data;
 	data["pattern"] = pattern;
@@ -309,7 +309,7 @@ Card *ServerPlayer::askForCard(const std::string &pattern, bool optional)
 			break;
 
 		const JsonObject &reply = replyData.toObject();
-		std::vector<Card *> cards = m_logic->findCards(reply.at("cards"));
+		std::vector<const Card *> cards = m_logic->findCards(reply.at("cards"));
 		uint skillId = reply.at("skillId").toUInt();
 		if (skillId) {
 			//@TODO: filter cards
@@ -317,7 +317,7 @@ Card *ServerPlayer::askForCard(const std::string &pattern, bool optional)
 		if (cards.size() != 1)
 			break;
 
-		Card *card = cards.front();
+		const Card *card = cards.front();
 		CardPattern p(pattern);
 		if (p.match(this, card))
 			return card;
@@ -326,14 +326,14 @@ Card *ServerPlayer::askForCard(const std::string &pattern, bool optional)
 	if (!optional) {
 		CardPattern p(pattern);
 
-		const std::deque<Card *> &handcards = handcardArea()->cards();
-		for (Card *card : handcards) {
+		const std::deque<const Card *> &handcards = handcardArea()->cards();
+		for (const Card *card : handcards) {
 			if (p.match(this, card))
 				return card;
 		}
 
-		const std::deque<Card *> &equips = equipArea()->cards();
-		for (Card *card : equips) {
+		const std::deque<const Card *> &equips = equipArea()->cards();
+		for (const Card *card : equips) {
 			if (p.match(this, card))
 				return card;
 		}
@@ -342,12 +342,12 @@ Card *ServerPlayer::askForCard(const std::string &pattern, bool optional)
 	return nullptr;
 }
 
-std::vector<Card *> ServerPlayer::askForCards(const std::string &pattern, int num, bool optional)
+std::vector<const Card *> ServerPlayer::askForCards(const std::string &pattern, int num, bool optional)
 {
 	return askForCards(pattern, num, num, optional);
 }
 
-std::vector<Card *> ServerPlayer::askForCards(const std::string &pattern, int minNum, int maxNum, bool optional)
+std::vector<const Card *> ServerPlayer::askForCards(const std::string &pattern, int minNum, int maxNum, bool optional)
 {
 	if (maxNum < minNum)
 		maxNum = minNum;
@@ -358,16 +358,16 @@ std::vector<Card *> ServerPlayer::askForCards(const std::string &pattern, int mi
 	data["maxNum"] = maxNum;
 	data["optional"] = optional;
 
-	std::set<Card *> cards;
+	std::set<const Card *> cards;
 
 	int timeout = 15 * 1000;
 	Json reply = request(cmd::AskForCard, data, timeout);
 	if (reply.isObject()) {
 		const JsonObject &reply_data = reply.toObject();
 		if (reply_data.find("cards") != reply_data.end()) {
-			std::vector<Card *> all_cards = m_logic->findCards(reply_data.at("cards"));
+			std::vector<const Card *> all_cards = m_logic->findCards(reply_data.at("cards"));
 			CardPattern p(pattern);
-			for (Card *card : all_cards) {
+			for (const Card *card : all_cards) {
 				if (p.match(this, card)) {
 					cards.insert(card);
 				}
@@ -377,17 +377,17 @@ std::vector<Card *> ServerPlayer::askForCards(const std::string &pattern, int mi
 
 	if (!optional) {
 		if (cards.size() < minNum) {
-			std::vector<Card *> all_cards;
-			const std::deque<Card *> &hand_cards = handcardArea()->cards();
-			const std::deque<Card *> &equips = equipArea()->cards();
+			std::vector<const Card *> all_cards;
+			const std::deque<const Card *> &hand_cards = handcardArea()->cards();
+			const std::deque<const Card *> &equips = equipArea()->cards();
 			all_cards.reserve(hand_cards.size() + equips.size());
-			for (Card *card : hand_cards)
+			for (const Card *card : hand_cards)
 				all_cards.push_back(card);
-			for (Card *card : equips)
+			for (const Card *card : equips)
 				all_cards.push_back(card);
 
 			CardPattern p(pattern);
-			for (Card *card : all_cards) {
+			for (const Card *card : all_cards) {
 				if (p.match(this, card)) {
 					cards.insert(card);
 					if (cards.size() >= minNum)
@@ -397,14 +397,13 @@ std::vector<Card *> ServerPlayer::askForCards(const std::string &pattern, int mi
 		}
 	}
 
-	std::vector<Card *> result;
-	for (Card *card : cards) {
-		result.push_back(card);
-	}
+	std::vector<const Card *> result;
+	result.resize(cards.size());
+	std::copy(cards.begin(), cards.end(), result.begin());
 	return result;
 }
 
-Card *ServerPlayer::askToChooseCard(ServerPlayer *owner, const std::string &areaFlag, bool handcardVisible)
+const Card *ServerPlayer::askToChooseCard(ServerPlayer *owner, const std::string &areaFlag, bool handcardVisible)
 {
 	const CardArea *hand_card_area = owner->handcardArea();
 	const CardArea *equip_area = owner->equipArea();
@@ -415,7 +414,7 @@ Card *ServerPlayer::askToChooseCard(ServerPlayer *owner, const std::string &area
 	if (areaFlag.find('h') != std::string::npos) {
 		JsonArray handcard_data;
 		if (handcardVisible) {
-			const std::deque<Card *> &cards = hand_card_area->cards();
+			const std::deque<const Card *> &cards = hand_card_area->cards();
 			for (const Card *card : cards)
 				handcard_data.push_back(card->id());
 			data["handcards"] = handcard_data;
@@ -426,7 +425,7 @@ Card *ServerPlayer::askToChooseCard(ServerPlayer *owner, const std::string &area
 
 	if (areaFlag.find('e') != std::string::npos) {
 		JsonArray equip_data;
-		const std::deque<Card *> &cards = equip_area->cards();
+		const std::deque<const Card *> &cards = equip_area->cards();
 		for (const Card *card : cards)
 			equip_data.push_back(card->id());
 		data["equips"] = equip_data;
@@ -434,7 +433,7 @@ Card *ServerPlayer::askToChooseCard(ServerPlayer *owner, const std::string &area
 
 	if (areaFlag.find('j') != std::string::npos) {
 		JsonArray trick_data;
-		const std::deque<Card *> &cards = delayed_trick_area->cards();
+		const std::deque<const Card *> &cards = delayed_trick_area->cards();
 		for (const Card *card : cards)
 			trick_data.push_back(card->id());
 		data["delayedTricks"] = trick_data;
@@ -444,17 +443,17 @@ Card *ServerPlayer::askToChooseCard(ServerPlayer *owner, const std::string &area
 	uint card_id = request(cmd::ChoosePlayerCard, data, timeout).toUInt();
 	if (card_id > 0) {
 		if (areaFlag.find('h') != std::string::npos  && handcardVisible) {
-			Card *card = hand_card_area->findCard(card_id);
+			const Card *card = hand_card_area->findCard(card_id);
 			if (card)
 				return card;
 		}
 		if (areaFlag.find('e') != std::string::npos) {
-			Card *card = equip_area->findCard(card_id);
+			const Card *card = equip_area->findCard(card_id);
 			if (card)
 				return card;
 		}
 		if (areaFlag.find('j') != std::string::npos) {
-			Card *card = delayed_trick_area->findCard(card_id);
+			const Card *card = delayed_trick_area->findCard(card_id);
 			if (card)
 				return card;
 		}
@@ -500,14 +499,14 @@ bool ServerPlayer::askToUseCard(const std::string &pattern, const std::vector<Se
 		}
 	}
 
-	std::vector<Card *> cards = m_logic->findCards(reply["cards"]);
+	std::vector<const Card *> cards = m_logic->findCards(reply["cards"]);
 
 	const Skill *skill = nullptr;
 	uint skill_id = reply["skill_id"].toUInt();
 	if (skill_id)
 		skill = getSkill(skill_id);
 
-	Card *card = nullptr;
+	const Card *card = nullptr;
 	if (skill) {
 		/*if (skill->type() == Skill::ViewAsType) {
 			if (skill->subtype() == ViewAsSkill::ProactiveType) {
@@ -547,7 +546,7 @@ bool ServerPlayer::askToUseCard(const std::string &pattern, const std::vector<Se
 	return m_logic->useCard(use);
 }
 
-std::vector<std::vector<Card *>> ServerPlayer::askToArrangeCard(const std::vector<Card *> &cards, const std::vector<int> &capacities, const std::vector<std::string> &areaNames)
+std::vector<std::vector<const Card *>> ServerPlayer::askToArrangeCard(const std::vector<const Card *> &cards, const std::vector<int> &capacities, const std::vector<std::string> &areaNames)
 {
 	JsonObject data;
 
@@ -567,7 +566,7 @@ std::vector<std::vector<Card *>> ServerPlayer::askToArrangeCard(const std::vecto
 	}
 	data["areaNames"] = area_data;
 
-	std::vector<std::vector<Card *>> result;
+	std::vector<std::vector<const Card *>> result;
 
 	int timeout = 15 * 1000;
 	const Json reply = request(cmd::ArrangeCard, data, timeout * 3);
@@ -575,9 +574,9 @@ std::vector<std::vector<Card *>> ServerPlayer::askToArrangeCard(const std::vecto
 		int maxi = static_cast<int>(std::min(capacities.size(), reply.size()));
 		for (int i = 0; i < maxi; i++) {
 			const Json card_data = reply.at(i);
-			std::vector<Card *> found = Card::Find(cards, card_data);
+			std::vector<const Card *> found = Card::Find(cards, card_data);
 			int capacity = capacities.at(i);
-			std::vector<Card *> add;
+			std::vector<const Card *> add;
 			add.reserve(capacity);
 			for (int c = 0; c < capacity; c++) {
 				add.push_back(found.at(i));
@@ -639,7 +638,7 @@ void ServerPlayer::addSkillHistory(const Skill *skill)
 	notify(cmd::InvokeSkill, data);
 }
 
-void ServerPlayer::addSkillHistory(const Skill *skill, const std::vector<Card *> &cards)
+void ServerPlayer::addSkillHistory(const Skill *skill, const std::vector<const Card *> &cards)
 {
 	Player::addSkillHistory(skill);
 
@@ -671,7 +670,7 @@ void ServerPlayer::addSkillHistory(const Skill *skill, const std::vector<ServerP
 	m_logic->broadcastNotification(cmd::InvokeSkill, data);
 }
 
-void ServerPlayer::addSkillHistory(const Skill *skill, const std::vector<Card *> &cards, const std::vector<ServerPlayer *> &targets)
+void ServerPlayer::addSkillHistory(const Skill *skill, const std::vector<const Card *> &cards, const std::vector<ServerPlayer *> &targets)
 {
 	Player::addSkillHistory(skill);
 

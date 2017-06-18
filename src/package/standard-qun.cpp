@@ -63,7 +63,7 @@ public:
 		return selected.size() == 1;
 	}
 
-	bool cost(GameLogic *logic, ServerPlayer *, const std::vector<ServerPlayer *> &, const std::vector<Card *> &cards) const override
+	bool cost(GameLogic *logic, ServerPlayer *, const std::vector<ServerPlayer *> &, const std::vector<const Card *> &cards) const override
 	{
 		CardsMoveStruct move;
 		move.cards = cards;
@@ -74,7 +74,7 @@ public:
 		return true;
 	}
 
-	void effect(GameLogic *logic, ServerPlayer *from, const std::vector<ServerPlayer *> &to, const std::vector<Card *> &) const override
+	void effect(GameLogic *logic, ServerPlayer *from, const std::vector<ServerPlayer *> &to, const std::vector<const Card *> &) const override
 	{
 		RecoverStruct recover;
 		recover.from = from;
@@ -100,7 +100,7 @@ public:
 		return card->color() == CardColor::Red && pattern == "Peach";
 	}
 
-	Card *viewAs(Card *card, const Player *) const override
+	const Card *viewAs(const Card *card, const Player *) const override
 	{
 		Peach *peach = new Peach(card->suit(), card->number());
 		peach->addSubcard(card);
@@ -156,7 +156,7 @@ public:
 			CardResponseStruct *response = static_cast<CardResponseStruct *>(data);
 
 			response->from->showPrompt("duel-slash", response->to);
-			Card *slash = response->from->askForCard("Slash");
+			const Card *slash = response->from->askForCard("Slash");
 			if (slash == nullptr)
 				return true;
 
@@ -209,7 +209,7 @@ public:
 		return selected.size() == 2;
 	}
 
-	bool cost(GameLogic *logic, ServerPlayer *, const std::vector<ServerPlayer *> &, const std::vector<Card *> &cards) const override
+	bool cost(GameLogic *logic, ServerPlayer *, const std::vector<ServerPlayer *> &, const std::vector<const Card *> &cards) const override
 	{
 		CardsMoveStruct move;
 		move.cards = cards;
@@ -220,7 +220,7 @@ public:
 		return true;
 	}
 
-	void effect(GameLogic *logic, ServerPlayer *, const std::vector<ServerPlayer *> &to, const std::vector<Card *> &) const override
+	void effect(GameLogic *logic, ServerPlayer *, const std::vector<ServerPlayer *> &to, const std::vector<const Card *> &) const override
 	{
 		Duel *duel = new Duel(CardSuit::None, 0);
 		duel->setSkill(this);

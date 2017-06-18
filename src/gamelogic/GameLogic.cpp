@@ -64,9 +64,6 @@ GameLogic::~GameLogic()
 	for (ServerPlayer *player : m_players) {
 		delete player;
 	}
-
-	for (const std::pair<uint, Card *> &p : m_cards)
-		delete p.second;
 }
 
 void GameLogic::addPlayer(KA_IMPORT User *user)
@@ -351,14 +348,14 @@ void GameLogic::sortByActionOrder(std::vector<ServerPlayer *> &players) const
 	});
 }
 
-Card *GameLogic::getDrawPileCard()
+const Card *GameLogic::getDrawPileCard()
 {
 	if (m_drawPile->size() < 1)
 		reshuffleDrawPile();
 	return m_drawPile->first();
 }
 
-std::vector<Card *> GameLogic::getDrawPileCards(int n)
+std::vector<const Card *> GameLogic::getDrawPileCards(int n)
 {
 	if (m_drawPile->size() < n)
 		reshuffleDrawPile();
@@ -377,16 +374,16 @@ void GameLogic::reshuffleDrawPile()
 	/*if (limit > 0 && times == limit)
 		gameOver(".");*/
 
-	std::vector<Card *> new_cards;
-	std::deque<Card *> &old_cards = m_discardPile->cards();
-	for (Card *card : old_cards) {
+	std::vector<const Card *> new_cards;
+	std::deque<const Card *> &old_cards = m_discardPile->cards();
+	for (const Card *card : old_cards) {
 		new_cards.push_back(card);
 	}
 	m_discardPile->clear();
 	std::random_device rd;
 	std::mt19937 g(rd());
 	std::shuffle(new_cards.begin(), new_cards.end(), g);
-	for (Card *card : new_cards) {
+	for (const Card *card : new_cards) {
 		m_cardPosition[card] = m_drawPile;
 	}
 	m_drawPile->add(new_cards, CardMoveDirection::Bottom);
@@ -423,7 +420,7 @@ void GameLogic::moveCards(std::vector<CardsMoveStruct> &moves)
 		if (from == nullptr)
 			continue;
 
-		for (Card *card : move.cards) {
+		for (const Card *card : move.cards) {
 			if (from != m_cardPosition.at(card))
 				continue;
 			if (from->remove(card)) {
@@ -453,8 +450,8 @@ bool GameLogic::useCard(CardUseStruct &use)
 
 	//Initialize isHandcard
 	use.isHandCard = true;
-	std::vector<Card *> real_cards = use.card->realCards();
-	for (Card *card : real_cards) {
+	std::vector<const Card *> real_cards = use.card->realCards();
+	for (const Card *card : real_cards) {
 		CardArea *area = m_cardPosition[card];
 		if (area == nullptr || area->owner() != use.from || area->type() != CardAreaType::Hand) {
 			use.isHandCard = false;
@@ -599,13 +596,13 @@ void GameLogic::judge(JudgeStruct &judge)
 	}
 }
 
-std::vector<Card *> GameLogic::findCards(const KA_IMPORT Json &data)
+std::vector<const Card *> GameLogic::findCards(const KA_IMPORT Json &data)
 {
-	std::vector<Card *> cards;
+	std::vector<const Card *> cards;
 	if (data.isArray()) {
 		JsonArray data_list = data.toArray();
 		for (const Json &card_id : data_list) {
-			Card *card = findCard(card_id.toUInt());
+			const Card *card = findCard(card_id.toUInt());
 			if (card)
 				cards.push_back(card);
 		}
@@ -911,23 +908,23 @@ void GameLogic::prepareToStart()
 
 		std::vector<const Card *> cards = package->cards();
 		for (const Card *card : cards) {
-			m_cards[card->id()] = card->clone();
+			m_cards[card->id()] = card;
 		}
 	}
 
 	//Prepare cards
 	JsonArray card_data;
-	for (const std::pair<uint, Card *> &p : m_cards) {
+	for (const std::pair<uint, const Card *> &p : m_cards) {
 		card_data.push_back(p.second->id());
 	}
 	broadcastNotification(cmd::PrepareCards, card_data);
 
-	for (const std::pair<uint, Card *> &p : m_cards) {
+	for (const std::pair<uint, const Card *> &p : m_cards) {
 		m_drawPile->add(p.second);
 		m_cardPosition[p.second] = m_drawPile;
 	}
 
-	std::deque<Card *> &cards = m_drawPile->cards();
+	std::deque<const Card *> &cards = m_drawPile->cards();
 	std::shuffle(cards.begin(), cards.end(), g);
 
 	fire(PrepareToStart);
@@ -976,9 +973,9 @@ void GameLogic::filterCardsMove(std::vector<CardsMoveStruct> &moves)
 		CardsMoveStruct &move = moves[i];
 
 		CardArea *destination = findArea(move.to);
-		for (Card *card : move.cards) {
+		for (const Card *card : move.cards) {
 			if (card->isVirtual()) {
-				std::vector<Card *> real_cards = card->realCards();
+				std::vector<const Card *> real_cards = card->realCards();
 				auto i = std::find(move.cards.begin(), move.cards.end(), card);
 				if (i != move.cards.end()) {
 					move.cards.erase(i);
@@ -988,7 +985,7 @@ void GameLogic::filterCardsMove(std::vector<CardsMoveStruct> &moves)
 				move.cards.resize(offset + real_cards.size());
 				std::copy(real_cards.begin(), real_cards.end(), move.cards.begin() + offset);
 
-				std::map<Card *, CardArea *>::iterator iter = m_cardPosition.find(card);
+				std::map<const Card *, CardArea *>::iterator iter = m_cardPosition.find(card);
 				if (iter != m_cardPosition.end()) {
 					CardArea *source = iter->second;
 					if (source) {
@@ -1018,15 +1015,15 @@ void GameLogic::filterCardsMove(std::vector<CardsMoveStruct> &moves)
 		if (move.from.type != CardAreaType::Unknown)
 			continue;
 
-		std::map<CardArea *, std::vector<Card *>> cardSource;
-		for (Card *card : move.cards) {
+		std::map<CardArea *, std::vector<const Card *>> cardSource;
+		for (const Card *card : move.cards) {
 			CardArea *from = m_cardPosition[card];
 			if (from == nullptr)
 				continue;
 			cardSource[from].push_back(card);
 		}
 
-		for (const std::pair<CardArea *, std::vector<Card *>> &iter : cardSource) {
+		for (const std::pair<CardArea *, std::vector<const Card *>> &iter : cardSource) {
 			CardArea *from = iter.first;
 			CardsMoveStruct submove;
 			submove.from.type = from->type();

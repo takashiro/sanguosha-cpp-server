@@ -93,10 +93,10 @@ public:
 	virtual bool viewFilter(const std::vector<const Card *> &selected, const Card *card, const Player *self, const std::string &pattern) const = 0;
 
 	//Returns the generated new card
-	virtual Card *viewAs(const std::vector<Card *> &cards, const Player *self) const = 0;
+	virtual const Card *viewAs(const std::vector<const Card *> &cards, const Player *self) const = 0;
 
 	//Check if selected cards are valid
-	bool isValid(const std::vector<Card *> &cards, const Player *self, const std::string &pattern) const;
+	bool isValid(const std::vector<const Card *> &cards, const Player *self, const std::string &pattern) const;
 };
 
 class OneCardViewAsSkill : public ViewAsSkill
@@ -105,10 +105,10 @@ public:
 	OneCardViewAsSkill(const std::string &name);
 
 	bool viewFilter(const std::vector<const Card *> &selected, const Card *card, const Player *self, const std::string &pattern) const final override;
-	Card *viewAs(const std::vector<Card *> &cards, const Player *self) const final override;
+	const Card *viewAs(const std::vector<const Card *> &cards, const Player *self) const final override;
 
 	virtual bool viewFilter(const Card *card, const Player *self, const std::string &pattern) const = 0;
-	virtual Card *viewAs(Card *card, const Player *self) const = 0;
+	virtual const Card *viewAs(const Card *card, const Player *self) const = 0;
 };
 
 class ProactiveSkill : public Skill
@@ -126,7 +126,7 @@ public:
 	virtual bool cardFilter(const std::vector<const Card *> &selected, const Card *card, const Player *source, const std::string &pattern) const;
 
 	//Check if selected cards are valid
-	bool isValid(const std::vector<Card *> &cards, const Player *source, const std::string &pattern) const;
+	bool isValid(const std::vector<const Card *> &cards, const Player *source, const std::string &pattern) const;
 
 	//Check if the target players are feasible
 	virtual bool playerFeasible(const std::vector<const Player *> &selected, const Player *source) const;
@@ -138,8 +138,8 @@ public:
 	bool isValid(const std::vector<ServerPlayer *> &targets, ServerPlayer *source) const;
 	bool isValid(const std::vector<const Player *> &targets, const Player *source) const;
 
-	virtual bool cost(GameLogic *logic, ServerPlayer *from, const std::vector<ServerPlayer *> &to, const std::vector<Card *> &cards) const;
-	virtual void effect(GameLogic *logic, ServerPlayer *from, const std::vector<ServerPlayer *> &to, const std::vector<Card *> &cards) const;
+	virtual bool cost(GameLogic *logic, ServerPlayer *from, const std::vector<ServerPlayer *> &to, const std::vector<const Card *> &cards) const;
+	virtual void effect(GameLogic *logic, ServerPlayer *from, const std::vector<ServerPlayer *> &to, const std::vector<const Card *> &cards) const;
 };
 
 class CardModSkill : public TriggerSkill, public CardFilter

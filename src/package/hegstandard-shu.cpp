@@ -85,7 +85,7 @@ public:
 		return targets.size() == 1;
 	}
 
-	bool cost(GameLogic *logic, ServerPlayer *, const std::vector<ServerPlayer *> &to, const std::vector<Card *> &cards) const override
+	bool cost(GameLogic *logic, ServerPlayer *, const std::vector<ServerPlayer *> &to, const std::vector<const Card *> &cards) const override
 	{
 		if (to.empty() || cards.empty())
 			return false;
@@ -98,7 +98,7 @@ public:
 		return true;
 	}
 
-	void effect(GameLogic *logic, ServerPlayer *from, const std::vector<ServerPlayer *> &, const std::vector<Card *> &cards) const override
+	void effect(GameLogic *logic, ServerPlayer *from, const std::vector<ServerPlayer *> &, const std::vector<const Card *> &cards) const override
 	{
 		int oldValue = from->tag["rende_count"].toInt();
 		int newValue = oldValue + static_cast<int>(cards.size());

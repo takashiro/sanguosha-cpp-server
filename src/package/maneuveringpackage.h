@@ -46,8 +46,8 @@ class Analeptic : public BasicCard
 public:
 	Analeptic(Suit suit, int number);
 
-	void onUse(GameLogic *logic, CardUseStruct &use) override;
-	void effect(GameLogic *logic, CardEffectStruct &effect) override;
+	void onUse(GameLogic *logic, CardUseStruct &use) const override;
+	void effect(GameLogic *logic, CardEffectStruct &effect) const override;
 };
 
 class Fan : public Weapon
@@ -89,7 +89,7 @@ class SupplyShortage : public DelayedTrick
 public:
 	SupplyShortage(Suit suit, int number);
 
-	void takeEffect(GameLogic *, CardEffectStruct &effect) override;
+	void takeEffect(GameLogic *, CardEffectStruct &effect) const override;
 };
 
 class IronChain : public TrickCard
@@ -99,7 +99,7 @@ class IronChain : public TrickCard
 public:
 	IronChain(Suit suit, int number);
 
-	void effect(GameLogic *, CardEffectStruct &effect) override;
+	void effect(GameLogic *, CardEffectStruct &effect) const override;
 };
 
 class FireAttack : public SingleTargetTrick
@@ -110,7 +110,7 @@ public:
 	FireAttack(Suit suit, int number);
 
 	bool targetFilter(const std::vector<const Player *> &targets, const Player *toSelect, const Player *self) const override;
-	void effect(GameLogic *logic, CardEffectStruct &effect) override;
+	void effect(GameLogic *logic, CardEffectStruct &effect) const override;
 };
 
 class ManeuveringPackage : public Package

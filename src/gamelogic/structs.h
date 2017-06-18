@@ -54,7 +54,7 @@ struct CardsMoveStruct
 
 	Area from;
 	Area to;
-	std::vector<Card *> cards;
+	std::vector<const Card *> cards;
 	bool isOpen;
 	bool isLastHandCard;
 	CardsMoveStruct *origin;
@@ -62,9 +62,9 @@ struct CardsMoveStruct
 	CardsMoveStruct();
 	~CardsMoveStruct();
 
-	CardsMoveStruct &operator << (Card *card) { cards.push_back(card); return *this; }
-	CardsMoveStruct &operator << (const std::vector<Card *> &cards);
-	CardsMoveStruct &operator << (const std::deque<Card *> &cards);
+	CardsMoveStruct &operator << (const Card *card) { cards.push_back(card); return *this; }
+	CardsMoveStruct &operator << (const std::vector<const Card *> &cards);
+	CardsMoveStruct &operator << (const std::deque<const Card *> &cards);
 
 	bool isRelevant(const ServerPlayer *player) const;
 	KA_IMPORT Json toJson(bool open = false) const;
@@ -80,8 +80,8 @@ struct CardUseStruct
 {
 	ServerPlayer *from;
 	std::vector<ServerPlayer *> to;
-	Card *card;
-	Card *target;
+	const Card *card;
+	const Card *target;
 	std::vector<ServerPlayer *> nullifiedList;
 	bool isNullified;
 	bool addHistory;
@@ -112,7 +112,7 @@ struct DamageStruct
 
 	ServerPlayer *from;
 	ServerPlayer *to;
-	Card *card;
+	const Card *card;
 	int damage;
 	Nature nature;
 	bool chain;
@@ -130,7 +130,7 @@ struct RecoverStruct
 	ServerPlayer *from;
 	ServerPlayer *to;
 	int recover;
-	Card *card;
+	const Card *card;
 
 	RecoverStruct();
 };
@@ -139,8 +139,8 @@ struct CardResponseStruct
 {
 	ServerPlayer *from;
 	ServerPlayer *to;
-	Card *card;
-	Card *target;
+	const Card *card;
+	const Card *target;
 
 	CardResponseStruct();
 };
@@ -149,7 +149,7 @@ struct JudgeStruct
 {
 	CardPattern pattern;
 	ServerPlayer *who;
-	Card *card;
+	const Card *card;
 	bool matched;
 
 	JudgeStruct(const std::string &pattern);

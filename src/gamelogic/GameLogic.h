@@ -77,8 +77,8 @@ public:
 	void addExtraTurn(ServerPlayer *player) { m_extraTurns.push_back(player); }
 	const std::list<ServerPlayer *> &extraTurns() const { return m_extraTurns; }
 
-	Card *getDrawPileCard();
-	std::vector<Card *> getDrawPileCards(int n);
+	const Card *getDrawPileCard();
+	std::vector<const Card *> getDrawPileCards(int n);
 	void reshuffleDrawPile();
 	int reshufflingCount() const { return m_reshufflingCount; }
 
@@ -98,8 +98,8 @@ public:
 
 	void judge(JudgeStruct &judge);
 
-	Card *findCard(uint id) const { return m_cards.at(id); }
-	std::vector<Card *> findCards(const KA_IMPORT Json &data);
+	const Card *findCard(uint id) const { return m_cards.at(id); }
+	std::vector<const Card *> findCards(const KA_IMPORT Json &data);
 
 	void damage(DamageStruct &damage);
 	void loseHp(ServerPlayer *victim, int lose);
@@ -135,7 +135,7 @@ private:
 	ServerPlayer *m_currentPlayer;
 	std::list<ServerPlayer *> m_extraTurns;
 	std::vector<const Package *> m_packages;
-	std::map<uint, Card *> m_cards;
+	std::map<uint, const Card *> m_cards;
 	int m_round;
 	int m_reshufflingCount;
 
@@ -144,5 +144,5 @@ private:
 	CardArea *m_table;
 	CardArea *m_wugu;
 
-	std::map<Card *, CardArea *> m_cardPosition;
+	std::map<const Card *, CardArea *> m_cardPosition;
 };

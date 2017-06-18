@@ -47,10 +47,10 @@ public:
 	KA_IMPORT User *user() const { return m_user; }
 
 	void drawCards(int n);
-	void recastCard(Card *card);
+	void recastCard(const Card *card);
 
-	void showCard(Card *card);
-	void showCards(const std::vector<Card *> &cards);
+	void showCard(const Card *card);
+	void showCards(const std::vector<const Card *> &cards);
 
 	void play();
 	void play(const std::vector<Phase> &phases);
@@ -67,21 +67,21 @@ public:
 	void showPrompt(const std::string &message, const KA_IMPORT JsonArray &args = KA_IMPORT JsonArray());
 
 	Event askForTriggerOrder(const EventList &options, bool cancelable);
-	Card *askForCard(const std::string &pattern, bool optional = true);
-	std::vector<Card *> askForCards(const std::string &pattern, int num, bool optional = false);
-	std::vector<Card *> askForCards(const std::string &pattern, int minNum, int maxNum, bool optional = false);
-	Card *askToChooseCard(ServerPlayer *owner, const std::string &areaFlag = "hej", bool handcardVisible = false);
+	const Card *askForCard(const std::string &pattern, bool optional = true);
+	std::vector<const Card *> askForCards(const std::string &pattern, int num, bool optional = false);
+	std::vector<const Card *> askForCards(const std::string &pattern, int minNum, int maxNum, bool optional = false);
+	const Card *askToChooseCard(ServerPlayer *owner, const std::string &areaFlag = "hej", bool handcardVisible = false);
 	bool askToUseCard(const std::string &pattern, const std::vector<ServerPlayer *> &assignedTargets = std::vector<ServerPlayer *>());
-	std::vector<std::vector<Card *>> askToArrangeCard(const std::vector<Card *> &cards, const std::vector<int> &capacities, const std::vector<std::string> &areaNames = std::vector<std::string>());
+	std::vector<std::vector<const Card *>> askToArrangeCard(const std::vector<const Card *> &cards, const std::vector<int> &capacities, const std::vector<std::string> &areaNames = std::vector<std::string>());
 	std::string askForOption(const std::vector<std::string> &options);
 
 	void broadcastProperty(const char *name, const KA_IMPORT Json &value, ServerPlayer *except = nullptr) const;
 	void unicastProperty(const char *name, const KA_IMPORT Json &value, ServerPlayer *to);
 
 	void addSkillHistory(const Skill *skill);
-	void addSkillHistory(const Skill *skill, const std::vector<Card *> &cards);
+	void addSkillHistory(const Skill *skill, const std::vector<const Card *> &cards);
 	void addSkillHistory(const Skill *skill, const std::vector<ServerPlayer *> &targets);
-	void addSkillHistory(const Skill *skill, const std::vector<Card *> &cards, const std::vector<ServerPlayer *> &targets);
+	void addSkillHistory(const Skill *skill, const std::vector<const Card *> &cards, const std::vector<ServerPlayer *> &targets);
 	void clearSkillHistory();
 
 	void addCardHistory(const std::string &name, int times = 1);

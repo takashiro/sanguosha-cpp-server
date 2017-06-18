@@ -53,9 +53,9 @@ static std::vector<const EventHandler *> basic_rules()
 			switch (current->phase()) {
 			case PlayerPhase::Judge: {
 				CardArea *delayed_trick = current->delayedTrickArea();
-				std::deque<Card *> tricks = current->delayedTrickArea()->cards();
+				std::deque<const Card *> tricks = current->delayedTrickArea()->cards();
 				while (delayed_trick->size() > 0 && current->isAlive()) {
-					Card *trick = delayed_trick->takeLast();
+					const Card *trick = delayed_trick->takeLast();
 
 					if (trick->type() == CardType::Trick && trick->subtype() == TrickCard::DelayedType) {
 						CardUseStruct use;
@@ -92,7 +92,7 @@ static std::vector<const EventHandler *> basic_rules()
 				int discardNum = current->handcardNum() - maxCardNum;
 				if (discardNum > 0) {
 					current->showPrompt("ask_to_discard", discardNum);
-					std::vector<Card *> cards = current->askForCards(".|.|.|hand", discardNum);
+					std::vector<const Card *> cards = current->askForCards(".|.|.|hand", discardNum);
 
 					CardsMoveStruct move;
 					move.cards = cards;
@@ -163,7 +163,7 @@ static std::vector<const EventHandler *> basic_rules()
 		new GameRule(AskForPeach, [] (GameLogic *logic, ServerPlayer *current, void *data) {
 			DeathStruct *dying = static_cast<DeathStruct *>(data);
 			while (dying->who->hp() <= 0) {
-				Card *peach = nullptr;
+				const Card *peach = nullptr;
 				if (dying->who->isAlive()) {
 					int peachNum = 1 - dying->who->hp();
 					if (current != dying->who) {

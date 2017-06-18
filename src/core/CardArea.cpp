@@ -37,9 +37,9 @@ CardArea::CardArea(CardArea::Type type, Player *owner, const std::string &name)
 {
 }
 
-bool CardArea::add(Card *card, Direction direction) {
+bool CardArea::add(const Card *card, Direction direction) {
 	if (card) {
-		for (Card *current : m_cards) {
+		for (const Card *current : m_cards) {
 			if (current == card) {
 				return false;
 			}
@@ -58,13 +58,13 @@ bool CardArea::add(Card *card, Direction direction) {
 	return true;
 }
 
-bool CardArea::add(const std::vector<Card *> &cards, Direction direction)
+bool CardArea::add(const std::vector<const Card *> &cards, Direction direction)
 {
 	int num = size();
 	if (direction == Top) {
 		size_t pos = 0;
 		for (size_t i = 0; i < cards.size(); i++) {
-			Card *card = cards.at(i);
+			const Card *card = cards.at(i);
 			if (card) {
 				if (std::find(m_cards.begin(), m_cards.end(), card) != m_cards.end())
 					continue;
@@ -77,10 +77,10 @@ bool CardArea::add(const std::vector<Card *> &cards, Direction direction)
 			pos++;
 		}
 	} else {
-		for (Card *card : cards) {
+		for (const Card *card : cards) {
 			if (card) {
 				bool contains = false;
-				for (Card *current : m_cards) {
+				for (const Card *current : m_cards) {
 					if (current == card) {
 						contains = true;
 						break;
@@ -103,7 +103,7 @@ bool CardArea::add(const std::vector<Card *> &cards, Direction direction)
 	return num + cards.size() == size();
 }
 
-bool CardArea::remove(Card *card)
+bool CardArea::remove(const Card *card)
 {
 	auto i = std::find(m_cards.begin(), m_cards.end(), card);
 	if (i != m_cards.end()) {
@@ -116,10 +116,10 @@ bool CardArea::remove(Card *card)
 	return false;
 }
 
-bool CardArea::remove(const std::vector<Card *> &cards)
+bool CardArea::remove(const std::vector<const Card *> &cards)
 {
 	int num = size();
-	for (Card *card : cards) {
+	for (const Card *card : cards) {
 		auto i = std::find(m_cards.begin(), m_cards.end(), card);
 		if (i != m_cards.end()) {
 			m_cards.erase(i);
@@ -132,16 +132,16 @@ bool CardArea::remove(const std::vector<Card *> &cards)
 	return num - cards.size() == size();
 }
 
-Card *CardArea::findCard(uint id) const
+const Card *CardArea::findCard(uint id) const
 {
-	for (Card *card : m_cards) {
+	for (const Card *card : m_cards) {
 		if (card && card->id() == id)
 			return card;
 	}
 	return nullptr;
 }
 
-Card *CardArea::rand() const
+const Card *CardArea::rand() const
 {
 	if (m_cards.empty())
 		return nullptr;
@@ -152,32 +152,32 @@ Card *CardArea::rand() const
 	return m_cards.at(dis(gen));
 }
 
-Card *CardArea::takeFirst()
+const Card *CardArea::takeFirst()
 {
-	Card *first = m_cards.front();
+	const Card *first = m_cards.front();
 	m_cards.pop_front();
 	return first;
 }
 
-Card *CardArea::takeLast()
+const Card *CardArea::takeLast()
 {
-	Card *last = m_cards.back();
+	const Card *last = m_cards.back();
 	m_cards.pop_back();
 	return last;
 }
 
-std::vector<Card *> CardArea::first(int n) const
+std::vector<const Card *> CardArea::first(int n) const
 {
 	n = std::min(n, static_cast<int>(m_cards.size()));
-	std::vector<Card *> cards;
+	std::vector<const Card *> cards;
 	cards.resize(n);
 	std::copy(m_cards.begin(), m_cards.begin() + n, cards.begin());
 	return cards;
 }
 
-std::vector<Card *> CardArea::takeFirst(int n)
+std::vector<const Card *> CardArea::takeFirst(int n)
 {
-	std::vector<Card *> cards;
+	std::vector<const Card *> cards;
 	cards.resize(n);
 	for (int i = 0; i < n; i++) {
 		cards[i] = takeFirst();
@@ -185,10 +185,10 @@ std::vector<Card *> CardArea::takeFirst(int n)
 	return cards;
 }
 
-std::vector<Card *> CardArea::last(int n) const
+std::vector<const Card *> CardArea::last(int n) const
 {
 	n = std::min(n, static_cast<int>(m_cards.size()));
-	std::vector<Card *> cards;
+	std::vector<const Card *> cards;
 	cards.resize(n);
 	auto from = m_cards.begin() + (m_cards.size() - n);
 	auto to = from + n;
@@ -196,9 +196,9 @@ std::vector<Card *> CardArea::last(int n) const
 	return cards;
 }
 
-std::vector<Card *> CardArea::takeLast(int n)
+std::vector<const Card *> CardArea::takeLast(int n)
 {
-	std::vector<Card *> cards;
+	std::vector<const Card *> cards;
 	cards.resize(n);
 	for (int i = n - 1; i >= 0; i--) {
 		cards[i] = takeLast();
@@ -208,7 +208,7 @@ std::vector<Card *> CardArea::takeLast(int n)
 
 bool CardArea::contains(const Card *card) const
 {
-	for (Card *current : m_cards) {
+	for (const Card *current : m_cards) {
 		if (current == card)
 			return true;
 	}

@@ -49,7 +49,7 @@ bool Slash::targetFilter(const std::vector<const Player *> &targets, const Playe
 	return toSelect->inAttackRangeOf(self) && BasicCard::targetFilter(targets, toSelect, self);
 }
 
-void Slash::effect(GameLogic *logic, CardEffectStruct &effect)
+void Slash::effect(GameLogic *logic, CardEffectStruct &effect) const
 {
 	DamageStruct damage;
 	damage.from = effect.from;
@@ -75,7 +75,7 @@ Jink::Jink(Card::Suit suit, int number)
 	m_targetFixed = true;
 }
 
-void Jink::onUse(GameLogic *logic, CardUseStruct &use)
+void Jink::onUse(GameLogic *logic, CardUseStruct &use) const
 {
 	SlashEffectStruct *effect = static_cast<SlashEffectStruct *>(use.extra);
 	if (effect)
@@ -83,7 +83,7 @@ void Jink::onUse(GameLogic *logic, CardUseStruct &use)
 	BasicCard::onUse(logic, use);
 }
 
-void Jink::effect(GameLogic *, CardEffectStruct &effect)
+void Jink::effect(GameLogic *, CardEffectStruct &effect) const
 {
 	SlashEffectStruct *slash_effect = static_cast<SlashEffectStruct *>(effect.use.extra);
 	if (slash_effect) {
@@ -103,14 +103,14 @@ Peach::Peach(Card::Suit suit, int number)
 	m_targetFixed = true;
 }
 
-void Peach::onUse(GameLogic *logic, CardUseStruct &use)
+void Peach::onUse(GameLogic *logic, CardUseStruct &use) const
 {
 	if (use.to.empty())
 		use.to.push_back(use.from);
 	BasicCard::onUse(logic, use);
 }
 
-void Peach::effect(GameLogic *logic, CardEffectStruct &effect)
+void Peach::effect(GameLogic *logic, CardEffectStruct &effect) const
 {
 	RecoverStruct recover;
 	recover.card = this;

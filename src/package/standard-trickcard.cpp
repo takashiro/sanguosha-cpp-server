@@ -36,7 +36,7 @@ AmazingGrace::AmazingGrace(CardSuit suit, int number)
 	setName("amazing_grace");
 }
 
-void AmazingGrace::use(GameLogic *logic, CardUseStruct &use)
+void AmazingGrace::use(GameLogic *logic, CardUseStruct &use) const
 {
 	CardsMoveStruct move;
 	move.from.type = CardAreaType::DrawPile;
@@ -61,17 +61,17 @@ void AmazingGrace::use(GameLogic *logic, CardUseStruct &use)
 	}
 }
 
-void AmazingGrace::effect(GameLogic *logic, CardEffectStruct &effect)
+void AmazingGrace::effect(GameLogic *logic, CardEffectStruct &effect) const
 {
 	int timeout = logic->config()->timeout * 1000;
 
 	Json reply_data = effect.to->request(cmd::TakeAmazingGrace, Json(), timeout);
 	uint cardId = reply_data.toUInt();
 
-	Card *takenCard = nullptr;
+	const Card *takenCard = nullptr;
 	const CardArea *wugu = logic->wugu();
-	std::deque<Card *> cards = wugu->cards();
-	for (Card *card : cards) {
+	const std::deque<const Card *> &cards = wugu->cards();
+	for (const Card *card : cards) {
 		if (card->id() == cardId) {
 			takenCard = card;
 			break;
@@ -116,7 +116,7 @@ bool GodSalvation::isNullifiable(const CardEffectStruct &effect) const
 	return effect.to->isWounded() && TrickCard::isNullifiable(effect);
 }
 
-void GodSalvation::effect(GameLogic *logic, CardEffectStruct &effect)
+void GodSalvation::effect(GameLogic *logic, CardEffectStruct &effect) const
 {
 	if (effect.to->isWounded()) {
 		RecoverStruct recover;
@@ -133,10 +133,10 @@ SavageAssault::SavageAssault(CardSuit suit, int number)
 	setName("savage_assault");
 }
 
-void SavageAssault::effect(GameLogic *logic, CardEffectStruct &effect)
+void SavageAssault::effect(GameLogic *logic, CardEffectStruct &effect) const
 {
 	effect.to->showPrompt("savage-assault-slash", effect.from);
-	Card *slash = effect.to->askForCard("Slash");
+	const Card *slash = effect.to->askForCard("Slash");
 	if (slash) {
 		CardResponseStruct response;
 		response.from = effect.to;
@@ -159,10 +159,10 @@ ArcheryAttack::ArcheryAttack(CardSuit suit, int number)
 	setName("archery_attack");
 }
 
-void ArcheryAttack::effect(GameLogic *logic, CardEffectStruct &effect)
+void ArcheryAttack::effect(GameLogic *logic, CardEffectStruct &effect) const
 {
 	effect.to->showPrompt("archery-attack-jink", effect.from);
-	Card *jink = effect.to->askForCard("Jink");
+	const Card *jink = effect.to->askForCard("Jink");
 	if (jink) {
 		CardResponseStruct response;
 		response.from = effect.to;
@@ -186,14 +186,14 @@ ExNihilo::ExNihilo(CardSuit suit, int number)
 	m_targetFixed = true;
 }
 
-void ExNihilo::onUse(GameLogic *logic, CardUseStruct &use)
+void ExNihilo::onUse(GameLogic *logic, CardUseStruct &use) const
 {
 	if (use.to.empty())
 		use.to.push_back(use.from);
 	SingleTargetTrick::onUse(logic, use);
 }
 
-void ExNihilo::effect(GameLogic *, CardEffectStruct &effect)
+void ExNihilo::effect(GameLogic *, CardEffectStruct &effect) const
 {
 	effect.to->drawCards(2);
 }
@@ -209,7 +209,7 @@ bool Duel::targetFilter(const std::vector<const Player *> &targets, const Player
 	return targets.empty() && toSelect != self && SingleTargetTrick::targetFilter(targets, toSelect, self);
 }
 
-void Duel::effect(GameLogic *logic, CardEffectStruct &effect)
+void Duel::effect(GameLogic *logic, CardEffectStruct &effect) const
 {
 	ServerPlayer *first = effect.to;
 	ServerPlayer *second = effect.from;
@@ -218,7 +218,7 @@ void Duel::effect(GameLogic *logic, CardEffectStruct &effect)
 		if (!first->isAlive())
 			break;
 		first->showPrompt("duel-slash", second);
-		Card *slash = first->askForCard("Slash");
+		const Card *slash = first->askForCard("Slash");
 		if (slash == nullptr)
 			break;
 		CardResponseStruct response;
@@ -247,7 +247,7 @@ Indulgence::Indulgence(CardSuit suit, int number)
 	m_judgePattern = ".|^heart";
 }
 
-void Indulgence::takeEffect(GameLogic *, CardEffectStruct &effect)
+void Indulgence::takeEffect(GameLogic *, CardEffectStruct &effect) const
 {
 	effect.to->clearCardHistory();
 	effect.to->skipPhase(PlayerPhase::Play);
@@ -265,14 +265,14 @@ bool Snatch::targetFilter(const std::vector<const Player *> &targets, const Play
 	return toSelect != self && !toSelect->isAllNude() && SingleTargetTrick::targetFilter(targets, toSelect, self);
 }
 
-void Snatch::effect(GameLogic *logic, CardEffectStruct &effect)
+void Snatch::effect(GameLogic *logic, CardEffectStruct &effect) const
 {
 	if (effect.from->isDead())
 		return;
 	if (effect.to->isAllNude())
 		return;
 
-	Card *card = effect.from->askToChooseCard(effect.to);
+	const Card *card = effect.from->askToChooseCard(effect.to);
 	if (card) {
 		CardsMoveStruct move;
 		move << card;
@@ -293,14 +293,14 @@ bool Dismantlement::targetFilter(const std::vector<const Player *> &targets, con
 	return toSelect != self && !toSelect->isAllNude() && SingleTargetTrick::targetFilter(targets, toSelect, self);
 }
 
-void Dismantlement::effect(GameLogic *logic, CardEffectStruct &effect)
+void Dismantlement::effect(GameLogic *logic, CardEffectStruct &effect) const
 {
 	if (effect.from->isDead())
 		return;
 	if (effect.to->isAllNude())
 		return;
 
-	Card *card = effect.from->askToChooseCard(effect.to);
+	const Card *card = effect.from->askToChooseCard(effect.to);
 	if (card) {
 		CardsMoveStruct move;
 		move << card;
@@ -312,7 +312,6 @@ void Dismantlement::effect(GameLogic *logic, CardEffectStruct &effect)
 
 Collateral::Collateral(CardSuit suit, int number)
 	: SingleTargetTrick(suit, number)
-	, m_victim(nullptr)
 {
 	setName("collateral");
 }
@@ -350,34 +349,40 @@ bool Collateral::targetFilter(const std::vector<const Player *> &targets, const 
 	}
 }
 
-void Collateral::onUse(GameLogic *logic, CardUseStruct &use)
+void Collateral::onUse(GameLogic *logic, CardUseStruct &use) const
 {
-	m_victim = use.to.at(1);
-	use.to.erase(use.to.begin() + 1);
+	if (use.to.size() > 1) {
+		use.extra = static_cast<void *>(use.to.at(1));
+		use.to.erase(use.to.begin() + 1);
+	}
 	SingleTargetTrick::onUse(logic, use);
 }
 
 bool Collateral::doCollateral(CardEffectStruct &effect) const
 {
-	if (!m_victim->inAttackRangeOf(effect.to))
-		return false;
-	std::vector<ServerPlayer *> targets = {m_victim};
-	effect.to->showPrompt("collateral-slash", effect.from, m_victim);
-	return effect.to->askToUseCard("Slash", targets);
+	ServerPlayer *victim = static_cast<ServerPlayer *>(effect.use.extra);
+	if (victim) {
+		if (!victim->inAttackRangeOf(effect.to))
+			return false;
+		std::vector<ServerPlayer *> targets = {victim};
+		effect.to->showPrompt("collateral-slash", effect.from, victim);
+		return effect.to->askToUseCard("Slash", targets);
+	}
 }
 
-void Collateral::effect(GameLogic *logic, CardEffectStruct &effect)
+void Collateral::effect(GameLogic *logic, CardEffectStruct &effect) const
 {
-	Card *weapon = nullptr;
-	const std::deque<Card *> &cards = effect.to->equipArea()->cards();
-	for (Card *card : cards) {
+	const Card *weapon = nullptr;
+	const std::deque<const Card *> &cards = effect.to->equipArea()->cards();
+	for (const  Card *card : cards) {
 		if (card->subtype() == EquipCard::WeaponType) {
 			weapon = card;
 			break;
 		}
 	}
 
-	if (m_victim->isDead()) {
+	ServerPlayer *victim = static_cast<ServerPlayer *>(effect.use.extra);
+	if (victim && victim->isDead()) {
 		if (effect.from->isAlive() && effect.to->isAlive() && weapon) {
 			CardsMoveStruct move;
 			move << weapon;
@@ -419,14 +424,14 @@ bool Nullification::isAvailable(const Player *) const
 	return false;
 }
 
-void Nullification::effect(GameLogic *, CardEffectStruct &effect)
+void Nullification::effect(GameLogic *, CardEffectStruct &effect) const
 {
-	CardEffectStruct *trickEffect = static_cast<CardEffectStruct *>(effect.use.extra);
-	if (trickEffect) {
-		if (trickEffect->to)
-			trickEffect->use.nullifiedList.push_back(trickEffect->to);
-		else if (trickEffect->use.card->is("Nullification"))
-			trickEffect->use.isNullified = true;
+	CardEffectStruct *trick_effect = static_cast<CardEffectStruct *>(effect.use.extra);
+	if (trick_effect) {
+		if (trick_effect->to)
+			trick_effect->use.nullifiedList.push_back(trick_effect->to);
+		else if (trick_effect->use.card->is("Nullification"))
+			trick_effect->use.isNullified = true;
 	}
 }
 
@@ -437,7 +442,7 @@ Lightning::Lightning(CardSuit suit, int number)
 	m_judgePattern = ".|spade|2~9";
 }
 
-void Lightning::takeEffect(GameLogic *logic, CardEffectStruct &effect)
+void Lightning::takeEffect(GameLogic *logic, CardEffectStruct &effect) const
 {
 	DamageStruct damage;
 	damage.to = effect.to;

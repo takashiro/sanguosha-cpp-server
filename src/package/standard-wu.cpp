@@ -66,7 +66,7 @@ public:
 		return selected.empty();
 	}
 
-	void effect(GameLogic *logic, ServerPlayer *from, const std::vector<ServerPlayer *> &, const std::vector<Card *> &cards) const override
+	void effect(GameLogic *logic, ServerPlayer *from, const std::vector<ServerPlayer *> &, const std::vector<const Card *> &cards) const override
 	{
 		CardsMoveStruct move;
 		move.cards = cards;
@@ -90,7 +90,7 @@ public:
 		return card->color() == CardColor::Black;
 	}
 
-	Card *viewAs(Card *card, const Player *) const override
+	const Card *viewAs(const Card *card, const Player *) const override
 	{
 		Dismantlement *dismantlement = new Dismantlement(card->suit(), card->number());
 		dismantlement->addSubcard(card);
@@ -170,13 +170,13 @@ public:
 		return selected.empty();
 	}
 
-	bool cost(GameLogic *logic, ServerPlayer *from, const std::vector<ServerPlayer *> &, const std::vector<Card *> &) const override
+	bool cost(GameLogic *logic, ServerPlayer *from, const std::vector<ServerPlayer *> &, const std::vector<const Card *> &) const override
 	{
 		logic->loseHp(from, 1);
 		return true;
 	}
 
-	void effect(GameLogic *, ServerPlayer *from, const std::vector<ServerPlayer *> &, const std::vector<Card *> &) const override
+	void effect(GameLogic *, ServerPlayer *from, const std::vector<ServerPlayer *> &, const std::vector<const Card *> &) const override
 	{
 		from->drawCards(2);
 	}
@@ -225,7 +225,7 @@ public:
 		return selected.empty() && toSelect != source;
 	}
 
-	void effect(GameLogic *logic, ServerPlayer *from, const std::vector<ServerPlayer *> &to, const std::vector<Card *> &) const override
+	void effect(GameLogic *logic, ServerPlayer *from, const std::vector<ServerPlayer *> &to, const std::vector<const Card *> &) const override
 	{
 		ServerPlayer *victim = to.front();
 
@@ -233,7 +233,7 @@ public:
 		std::string suit = victim->askForOption(options);
 		//@to-do: add a log that shows the result
 
-		Card *card = victim->askToChooseCard(from, "h");
+		const Card *card = victim->askToChooseCard(from, "h");
 		victim->showCard(card);
 		if (card) {
 			CardsMoveStruct move;
@@ -264,7 +264,7 @@ public:
 		return card->suit() == CardSuit::Diamond && pattern.empty();
 	}
 
-	Card *viewAs(Card *card, const Player *) const override
+	const Card *viewAs(const Card *card, const Player *) const override
 	{
 		Card *indulgence = new Indulgence(card->suit(), card->number());
 		indulgence->addSubcard(card);
@@ -375,7 +375,7 @@ public:
 		return to_select->tag.find("liuli_slash_source") == to_select->tag.end() && to_select->inAttackRangeOf(source);
 	}
 
-	void effect(GameLogic *logic, ServerPlayer *, const std::vector<ServerPlayer *> &to, const std::vector<Card *> &cards) const
+	void effect(GameLogic *logic, ServerPlayer *, const std::vector<ServerPlayer *> &to, const std::vector<const Card *> &cards) const override
 	{
 		CardsMoveStruct move;
 		move.cards = cards;
@@ -513,7 +513,7 @@ public:
 		return selected.size() == 1;
 	}
 
-	bool cost(GameLogic *logic, ServerPlayer *, const std::vector<ServerPlayer *> &, const std::vector<Card *> &cards) const override
+	bool cost(GameLogic *logic, ServerPlayer *, const std::vector<ServerPlayer *> &, const std::vector<const Card *> &cards) const override
 	{
 		CardsMoveStruct discard;
 		discard.cards = cards;
@@ -524,7 +524,7 @@ public:
 		return true;
 	}
 
-	void effect(GameLogic *logic, ServerPlayer *from, const std::vector<ServerPlayer *> &to, const std::vector<Card *> &) const override
+	void effect(GameLogic *logic, ServerPlayer *from, const std::vector<ServerPlayer *> &to, const std::vector<const Card *> &) const override
 	{
 		std::vector<ServerPlayer *> targets(1 + to.size());
 		targets[0] = from;

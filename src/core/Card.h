@@ -84,13 +84,11 @@ public:
 	int subtype() const { return m_subtype; }
 	const char *typeString() const;
 
-	void addSubcard(Card *card);
-	void setSubcards(const std::vector<Card *> &cards) { m_subcards = cards; }
-	std::vector<Card *> subcards() const { return m_subcards; }
+	void addSubcard(const Card *card);
+	void setSubcards(const std::vector<const Card *> &cards) { m_subcards = cards; }
+	std::vector<const Card *> subcards() const { return m_subcards; }
 
-	Card *realCard();
 	const Card *realCard() const;
-	std::vector<Card *> realCards();
 	std::vector<const Card *> realCards() const;
 
 	void setSkill(const Skill *skill) { m_skill = skill; }
@@ -118,14 +116,14 @@ public:
 
 	bool isValid(const std::vector<const Player *> &targets, const Player *source) const;
 
-	virtual void onUse(GameLogic *logic, CardUseStruct &use) {}
-	virtual void use(GameLogic *logic, CardUseStruct &use) {}
-	virtual void onEffect(GameLogic *logic, CardEffectStruct &effect) {}
-	virtual void effect(GameLogic *logic, CardEffectStruct &effect) {}
-	virtual void complete(GameLogic *logic) {}
+	virtual void onUse(GameLogic *logic, CardUseStruct &use) const {}
+	virtual void use(GameLogic *logic, CardUseStruct &use) const {}
+	virtual void onEffect(GameLogic *logic, CardEffectStruct &effect) const {}
+	virtual void effect(GameLogic *logic, CardEffectStruct &effect) const {}
+	virtual void complete(GameLogic *logic) const {}
 
-	static Card *Find(const std::vector<Card *> &cards, uint id);
-	static std::vector<Card *> Find(const std::vector<Card *> &cards, const KA_IMPORT Json &data);
+	static const Card *Find(const std::vector<const Card *> &cards, uint id);
+	static std::vector<const Card *> Find(const std::vector<const Card *> &cards, const KA_IMPORT Json &data);
 
 	KA_IMPORT JsonObject toJson() const;
 
@@ -149,7 +147,7 @@ protected:
 	bool m_targetFixed;
 
 	const Skill *m_skill;
-	std::vector<Card *> m_subcards;
+	std::vector<const Card *> m_subcards;
 	std::set<std::string> m_flags;
 };
 

@@ -29,7 +29,7 @@ DefaultCard::DefaultCard(Suit suit, int number)
 {
 }
 
-void DefaultCard::onUse(GameLogic *logic, CardUseStruct &use)
+void DefaultCard::onUse(GameLogic *logic, CardUseStruct &use) const
 {
 	logic->sortByActionOrder(use.to);
 
@@ -43,7 +43,7 @@ void DefaultCard::onUse(GameLogic *logic, CardUseStruct &use)
 	logic->moveCards(move);
 }
 
-void DefaultCard::use(GameLogic *logic, CardUseStruct &use)
+void DefaultCard::use(GameLogic *logic, CardUseStruct &use) const
 {
 	for (ServerPlayer *target : use.to) {
 		CardEffectStruct effect(use);
@@ -59,7 +59,7 @@ void DefaultCard::use(GameLogic *logic, CardUseStruct &use)
 	complete(logic);
 }
 
-void DefaultCard::complete(GameLogic *logic)
+void DefaultCard::complete(GameLogic *logic) const
 {
 	const CardArea *table = logic->table();
 	if (table->contains(this)) {
@@ -84,7 +84,7 @@ TrickCard::TrickCard(Card::Suit suit, int number)
 	m_type = Type::Trick;
 }
 
-void TrickCard::onEffect(GameLogic *logic, CardEffectStruct &effect)
+void TrickCard::onEffect(GameLogic *logic, CardEffectStruct &effect) const
 {
 	if (isNullifiable(effect)) {
 		std::vector<ServerPlayer *> players = logic->allPlayers();
@@ -92,8 +92,8 @@ void TrickCard::onEffect(GameLogic *logic, CardEffectStruct &effect)
 
 		bool hasNullification = false;
 		for (ServerPlayer *player : players) {
-			const std::deque<Card *> &cards = player->handcardArea()->cards();
-			for (Card *card : cards) {
+			const std::deque<const Card *> &cards = player->handcardArea()->cards();
+			for (const Card *card : cards) {
 				if (card->is("Nullification")) {
 					hasNullification = true;
 					break;
@@ -120,7 +120,7 @@ void TrickCard::onEffect(GameLogic *logic, CardEffectStruct &effect)
 			} else {
 				player->showPrompt("trick-nullification-4", effect.use.card);
 			}
-			Card *card = player->askForCard("Nullification");
+			const Card *card = player->askForCard("Nullification");
 			if (card) {
 				CardUseStruct use;
 				use.from = player;
@@ -147,7 +147,7 @@ EquipCard::EquipCard(Card::Suit suit, int number)
 	m_targetFixed = true;
 }
 
-void EquipCard::onUse(GameLogic *logic, CardUseStruct &use)
+void EquipCard::onUse(GameLogic *logic, CardUseStruct &use) const
 {
 	ServerPlayer *player = use.from;
 	if (use.to.empty())
@@ -157,7 +157,7 @@ void EquipCard::onUse(GameLogic *logic, CardUseStruct &use)
 	logic->trigger(PreCardUsed, player, data);
 }
 
-void EquipCard::use(GameLogic *logic, CardUseStruct &use)
+void EquipCard::use(GameLogic *logic, CardUseStruct &use) const
 {
 	if (use.to.empty()) {
 		CardsMoveStruct move;
@@ -171,9 +171,9 @@ void EquipCard::use(GameLogic *logic, CardUseStruct &use)
 	ServerPlayer *target = use.to.front();
 
 	//Find the existing equip
-	Card *equippedCard = nullptr;
-	std::deque<Card *> equips = target->equipArea()->cards();
-	for (Card *card : equips) {
+	const Card *equippedCard = nullptr;
+	std::deque<const Card *> equips = target->equipArea()->cards();
+	for (const Card *card : equips) {
 		if (card->subtype() == subtype()) {
 			equippedCard = card;
 			break;
@@ -210,7 +210,7 @@ void EquipCard::use(GameLogic *logic, CardUseStruct &use)
 	}
 }
 
-void EquipCard::complete(GameLogic *)
+void EquipCard::complete(GameLogic *) const
 {
 }
 
@@ -222,7 +222,7 @@ GlobalEffect::GlobalEffect(Card::Suit suit, int number)
 	m_maxTargetNum = InfinityNum;
 }
 
-void GlobalEffect::onUse(GameLogic *logic, CardUseStruct &use)
+void GlobalEffect::onUse(GameLogic *logic, CardUseStruct &use) const
 {
 	if (use.to.empty()) {
 		std::vector<const Player *> selected;
@@ -245,7 +245,7 @@ AreaOfEffect::AreaOfEffect(Card::Suit suit, int number)
 	m_maxTargetNum = InfinityNum;
 }
 
-void AreaOfEffect::onUse(GameLogic *logic, CardUseStruct &use)
+void AreaOfEffect::onUse(GameLogic *logic, CardUseStruct &use) const
 {
 	if (use.to.empty()) {
 		std::vector<const Player *> selected;
@@ -290,16 +290,16 @@ bool DelayedTrick::targetFilter(const std::vector<const Player *> &selected, con
 		return true;
 	}
 
-	const std::deque<Card *> &area_cards = area->cards();
-	for (Card *card : area_cards) {
-		if (card->is(name().c_str())) {
+	const std::deque<const Card *> &area_cards = area->cards();
+	for (const Card *card : area_cards) {
+		if (card->is(this->name())) {
 			return false;
 		}
 	}
 	return true;
 }
 
-void DelayedTrick::onUse(GameLogic *logic, CardUseStruct &use)
+void DelayedTrick::onUse(GameLogic *logic, CardUseStruct &use) const
 {
 	logic->sortByActionOrder(use.to);
 
@@ -307,7 +307,7 @@ void DelayedTrick::onUse(GameLogic *logic, CardUseStruct &use)
 	logic->trigger(PreCardUsed, use.from, use_data);
 }
 
-void DelayedTrick::use(GameLogic *logic, CardUseStruct &use)
+void DelayedTrick::use(GameLogic *logic, CardUseStruct &use) const
 {
 	CardsMoveStruct move;
 	move << use.card;
@@ -321,7 +321,7 @@ void DelayedTrick::use(GameLogic *logic, CardUseStruct &use)
 	logic->moveCards(move);
 }
 
-void DelayedTrick::onEffect(GameLogic *logic, CardEffectStruct &effect)
+void DelayedTrick::onEffect(GameLogic *logic, CardEffectStruct &effect) const
 {
 	CardsMoveStruct move;
 	move << this;
@@ -332,7 +332,7 @@ void DelayedTrick::onEffect(GameLogic *logic, CardEffectStruct &effect)
 	TrickCard::onEffect(logic, effect);
 }
 
-void DelayedTrick::effect(GameLogic *logic, CardEffectStruct &effect)
+void DelayedTrick::effect(GameLogic *logic, CardEffectStruct &effect) const
 {
 	JudgeStruct judge(m_judgePattern);
 	judge.who = effect.to;
@@ -348,14 +348,14 @@ MovableDelayedTrick::MovableDelayedTrick(Card::Suit suit, int number)
 	m_targetFixed = true;
 }
 
-void MovableDelayedTrick::onUse(GameLogic *logic, CardUseStruct &use)
+void MovableDelayedTrick::onUse(GameLogic *logic, CardUseStruct &use) const
 {
 	if (use.to.empty())
 		use.to.push_back(use.from);
 	DelayedTrick::onUse(logic, use);
 }
 
-void MovableDelayedTrick::effect(GameLogic *logic, CardEffectStruct &effect)
+void MovableDelayedTrick::effect(GameLogic *logic, CardEffectStruct &effect) const
 {
 	JudgeStruct judge(m_judgePattern);
 	judge.who = effect.to;
@@ -374,7 +374,7 @@ void MovableDelayedTrick::effect(GameLogic *logic, CardEffectStruct &effect)
 	}
 }
 
-void MovableDelayedTrick::complete(GameLogic *logic)
+void MovableDelayedTrick::complete(GameLogic *logic) const
 {
 	const CardArea *table = logic->table();
 	if (!table->contains(this))
@@ -412,10 +412,9 @@ void MovableDelayedTrick::complete(GameLogic *logic)
 
 bool MovableDelayedTrick::isAvailable(const Player *player) const
 {
-	const char *className = name().c_str();
-	const std::deque<Card *> &cards = player->delayedTrickArea()->cards();
+	const std::deque<const Card *> &cards = player->delayedTrickArea()->cards();
 	for (const Card *card : cards) {
-		if (card->is(className))
+		if (card->is(this->name()))
 			return false;
 	}
 	return DelayedTrick::isAvailable(player);
@@ -460,4 +459,3 @@ Treasure::Treasure(Card::Suit suit, int number)
 {
 	m_subtype = TreasureType;
 }
-

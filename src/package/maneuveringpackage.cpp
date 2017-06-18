@@ -46,14 +46,14 @@ Analeptic::Analeptic(Card::Suit suit, int number)
 	m_targetFixed = true;
 }
 
-void Analeptic::onUse(GameLogic *logic, CardUseStruct &use)
+void Analeptic::onUse(GameLogic *logic, CardUseStruct &use) const
 {
 	if (use.to.empty())
 		use.to.push_back(use.from);
 	BasicCard::onUse(logic, use);
 }
 
-void Analeptic::effect(GameLogic *logic, CardEffectStruct &effect)
+void Analeptic::effect(GameLogic *logic, CardEffectStruct &effect) const
 {
 	if (effect.to->phase() == PlayerPhase::Play) {
 		effect.to->setDrunk(true);
@@ -101,7 +101,7 @@ SupplyShortage::SupplyShortage(Card::Suit suit, int number)
 	m_distanceLimit = 1;
 }
 
-void SupplyShortage::takeEffect(GameLogic *, CardEffectStruct &effect)
+void SupplyShortage::takeEffect(GameLogic *, CardEffectStruct &effect) const
 {
 	effect.to->clearCardHistory();
 	effect.to->skipPhase(PlayerPhase::Draw);
@@ -116,7 +116,7 @@ IronChain::IronChain(Card::Suit suit, int number)
 	m_maxTargetNum = 2;
 }
 
-void IronChain::effect(GameLogic *, CardEffectStruct &effect)
+void IronChain::effect(GameLogic *, CardEffectStruct &effect) const
 {
 	bool chained = !effect.to->isChained();
 	effect.to->setChained(chained);
@@ -134,13 +134,13 @@ bool FireAttack::targetFilter(const std::vector<const Player *> &targets, const 
 	return toSelect->handcardNum() > 0 && SingleTargetTrick::targetFilter(targets, toSelect, self);
 }
 
-void FireAttack::effect(GameLogic *logic, CardEffectStruct &effect)
+void FireAttack::effect(GameLogic *logic, CardEffectStruct &effect) const
 {
 	if (effect.to->handcardNum() <= 0)
 		return;
 
 	effect.to->showPrompt("fire-attack-show-card", effect.from);
-	Card *card = effect.to->askForCard(".", false);
+	const Card *card = effect.to->askForCard(".", false);
 	if (card)
 		effect.to->showCard(card);
 	else
@@ -150,7 +150,7 @@ void FireAttack::effect(GameLogic *logic, CardEffectStruct &effect)
 		std::string pattern = ".|";
 		pattern += card->suitString();
 		effect.from->showPrompt("fire-attack-discard-card", effect.to, card);
-		Card *discarded = effect.from->askForCard(pattern);
+		const Card *discarded = effect.from->askForCard(pattern);
 		if (discarded) {
 			CardsMoveStruct move;
 			move << discarded;

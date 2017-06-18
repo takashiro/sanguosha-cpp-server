@@ -155,20 +155,9 @@ const char *Card::typeString() const
 		return "skill";
 }
 
-void Card::addSubcard(Card *card)
+void Card::addSubcard(const Card *card)
 {
 	m_subcards.push_back(card);
-}
-
-Card *Card::realCard()
-{
-	if (id() > 0)
-		return this;
-
-	if (m_subcards.size() == 1)
-		return m_subcards.front()->realCard();
-
-	return nullptr;
 }
 
 const Card *Card::realCard() const
@@ -180,22 +169,6 @@ const Card *Card::realCard() const
 		return m_subcards.front()->realCard();
 
 	return nullptr;
-}
-
-std::vector<Card *> Card::realCards()
-{
-	std::vector<Card *> cards;
-	if (id() > 0) {
-		cards.push_back(this);
-	} else {
-		for (Card *subcard : m_subcards) {
-			std::vector<Card *> subcards = subcard->realCards();
-			for (Card *real_card : subcards) {
-				cards.push_back(real_card);
-			}
-		}
-	}
-	return cards;
 }
 
 std::vector<const Card *> Card::realCards() const
@@ -290,21 +263,21 @@ bool Card::isValid(const std::vector<const Player *> &targets, const Player *sou
 	return targetFeasible(selected, source);
 }
 
-Card *Card::Find(const std::vector<Card *> &cards, uint id)
+const Card *Card::Find(const std::vector<const Card *> &cards, uint id)
 {
-	for (Card *card : cards) {
+	for (const Card *card : cards) {
 		if (card->id() == id)
 			return card;
 	}
 	return nullptr;
 }
 
-std::vector<Card *> Card::Find(const std::vector<Card *> &cards, const KA_IMPORT Json &data)
+std::vector<const Card *> Card::Find(const std::vector<const Card *> &cards, const KA_IMPORT Json &data)
 {
-	std::vector<Card *> result;
+	std::vector<const Card *> result;
 	const JsonArray &targets = data.toArray();
 	for(const Json &target : targets) {
-		for (Card *card : cards) {
+		for (const Card *card : cards) {
 			if (card->id() == target.toUInt())
 				result.push_back(card);
 		}

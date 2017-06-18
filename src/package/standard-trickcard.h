@@ -32,8 +32,8 @@ class AmazingGrace : public GlobalEffect
 public:
 	AmazingGrace(Suit suit, int number);
 
-	void use(GameLogic *logic, CardUseStruct &use) override;
-	void effect(GameLogic *logic, CardEffectStruct &effect) override;
+	void use(GameLogic *logic, CardUseStruct &use) const override;
+	void effect(GameLogic *logic, CardEffectStruct &effect) const override;
 
 private:
 	void clearRestCards(GameLogic *logic) const;
@@ -46,7 +46,7 @@ class GodSalvation : public GlobalEffect
 public:
 	GodSalvation(Suit suit, int number);
 
-	void effect(GameLogic *logic, CardEffectStruct &effect) override;
+	void effect(GameLogic *logic, CardEffectStruct &effect) const override;
 	bool isNullifiable(const CardEffectStruct &effect) const override;
 };
 
@@ -57,7 +57,7 @@ class SavageAssault :public AreaOfEffect
 public:
 	SavageAssault(Suit suit, int number);
 
-	void effect(GameLogic *logic, CardEffectStruct &effect) override;
+	void effect(GameLogic *logic, CardEffectStruct &effect) const override;
 };
 
 class ArcheryAttack : public AreaOfEffect
@@ -67,7 +67,7 @@ class ArcheryAttack : public AreaOfEffect
 public:
 	ArcheryAttack(Suit suit, int number);
 
-	void effect(GameLogic *logic, CardEffectStruct &effect) override;
+	void effect(GameLogic *logic, CardEffectStruct &effect) const override;
 };
 
 class ExNihilo : public SingleTargetTrick
@@ -77,8 +77,8 @@ class ExNihilo : public SingleTargetTrick
 public:
 	ExNihilo(Suit suit, int number);
 
-	void onUse(GameLogic *logic, CardUseStruct &use) override;
-	void effect(GameLogic *, CardEffectStruct &effect) override;
+	void onUse(GameLogic *logic, CardUseStruct &use) const override;
+	void effect(GameLogic *, CardEffectStruct &effect) const override;
 };
 
 class Duel : public SingleTargetTrick
@@ -89,7 +89,7 @@ public:
 	Duel(Suit suit, int number);
 
 	bool targetFilter(const std::vector<const Player *> &targets, const Player *toSelect, const Player *self) const override;
-	void effect(GameLogic *logic, CardEffectStruct &effect) override;
+	void effect(GameLogic *logic, CardEffectStruct &effect) const override;
 };
 
 class Snatch : public SingleTargetTrick
@@ -100,7 +100,7 @@ public:
 	Snatch(Suit suit, int number);
 
 	bool targetFilter(const std::vector<const Player *> &targets, const Player *toSelect, const Player *self) const override;
-	void effect(GameLogic *logic, CardEffectStruct &effect) override;
+	void effect(GameLogic *logic, CardEffectStruct &effect) const override;
 };
 
 class Dismantlement : public SingleTargetTrick
@@ -111,7 +111,7 @@ public:
 	Dismantlement(Suit suit, int number);
 
 	bool targetFilter(const std::vector<const Player *> &targets, const Player *toSelect, const Player *self) const override;
-	void effect(GameLogic *logic, CardEffectStruct &effect) override;
+	void effect(GameLogic *logic, CardEffectStruct &effect) const override;
 };
 
 class Collateral : public SingleTargetTrick
@@ -123,13 +123,11 @@ public:
 	bool isAvailable(const Player *player) const override;
 	bool targetFeasible(const std::vector<const Player *> &targets, const Player *self) const override;
 	bool targetFilter(const std::vector<const Player *> &targets, const Player *toSelect, const Player *self) const override;
-	void onUse(GameLogic *logic, CardUseStruct &use) override;
-	void effect(GameLogic *logic, CardEffectStruct &effect) override;
+	void onUse(GameLogic *logic, CardUseStruct &use) const override;
+	void effect(GameLogic *logic, CardEffectStruct &effect) const override;
 
 private:
 	bool doCollateral(CardEffectStruct &effect) const;
-
-	ServerPlayer *m_victim;
 };
 
 class Nullification : public SingleTargetTrick
@@ -140,7 +138,7 @@ public:
 	Nullification(Suit suit, int number);
 
 	bool isAvailable(const Player *) const override;
-	void effect(GameLogic *, CardEffectStruct &effect) override;
+	void effect(GameLogic *, CardEffectStruct &effect) const override;
 };
 
 class Indulgence : public DelayedTrick
@@ -150,7 +148,7 @@ class Indulgence : public DelayedTrick
 public:
 	Indulgence(Suit suit, int number);
 
-	void takeEffect(GameLogic *, CardEffectStruct &effect) override;
+	void takeEffect(GameLogic *, CardEffectStruct &effect) const override;
 };
 
 class Lightning : public MovableDelayedTrick
@@ -160,5 +158,5 @@ class Lightning : public MovableDelayedTrick
 public:
 	Lightning(Suit suit, int number);
 
-	void takeEffect(GameLogic *logic, CardEffectStruct &effect) override;
+	void takeEffect(GameLogic *logic, CardEffectStruct &effect) const override;
 };

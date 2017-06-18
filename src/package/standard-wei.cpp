@@ -77,7 +77,7 @@ public:
 
 	bool effect(GameLogic *logic, ServerPlayer *target, DamageStruct &damage) const override
 	{
-		Card *card = target->askToChooseCard(damage.from, "he");
+		const Card *card = target->askToChooseCard(damage.from, "he");
 		if (card) {
 			CardsMoveStruct obtain;
 			obtain << card;
@@ -112,7 +112,7 @@ class Guicai : public ProactiveSkill
 		{
 			uint cardId = target->tag["guicai_card"].toUInt();
 			target->tag.erase("guicai_card");
-			Card *card = logic->findCard(cardId);
+			const Card *card = logic->findCard(cardId);
 			if (card) {
 				JudgeStruct *judge = static_cast<JudgeStruct *>(data);
 				judge->card = card;
@@ -143,16 +143,16 @@ public:
 		return selected.size() == 1;
 	}
 
-	bool cost(GameLogic *logic, ServerPlayer *from, const std::vector<ServerPlayer *> &, const std::vector<Card *> &cards) const override
+	bool cost(GameLogic *logic, ServerPlayer *from, const std::vector<ServerPlayer *> &, const std::vector<const Card *> &cards) const override
 	{
-		Card *card = cards.front();
+		const Card *card = cards.front();
 		CardResponseStruct response;
 		response.card = card;
 		response.from = from;
 		return logic->respondCard(response);
 	}
 
-	void effect(GameLogic *, ServerPlayer *from, const std::vector<ServerPlayer *> &, const std::vector<Card *> &cards) const override
+	void effect(GameLogic *, ServerPlayer *from, const std::vector<ServerPlayer *> &, const std::vector<const Card *> &cards) const override
 	{
 		from->tag["guicai_card"] = cards.front()->id();
 	}
@@ -216,7 +216,7 @@ public:
 		return card->color() == CardColor::Black;
 	}
 
-	Card *viewAs(Card *subcard, const Player *) const override
+	const Card *viewAs(const Card *subcard, const Player *) const override
 	{
 		Jink *jink = new Jink(subcard->suit(), subcard->number());
 		jink->setSkill(this);
@@ -250,7 +250,7 @@ public:
 
 		if (judge.matched && damage.from) {
 			damage.from->showPrompt("ganglie_discard_cards", target);
-			std::vector<Card *> cards = damage.from->askForCards(".|.|.|hand", 2, true);
+			std::vector<const Card *> cards = damage.from->askForCards(".|.|.|hand", 2, true);
 			if (cards.size() == 2) {
 				CardsMoveStruct discard;
 				discard.cards = cards;
@@ -306,7 +306,7 @@ class Tuxi : public ProactiveSkill
 			logic->sortByActionOrder(victims);
 
 			for (ServerPlayer *victim : victims) {
-				Card *card = from->askToChooseCard(victim, "h");
+				const Card *card = from->askToChooseCard(victim, "h");
 
 				CardsMoveStruct obtain;
 				obtain << card;
@@ -341,7 +341,7 @@ public:
 		return 1 <= num && num <= 2;
 	}
 
-	void effect(GameLogic *, ServerPlayer *from, const std::vector<ServerPlayer *> &to, const std::vector<Card *> &) const override
+	void effect(GameLogic *, ServerPlayer *from, const std::vector<ServerPlayer *> &to, const std::vector<const Card *> &) const override
 	{
 		JsonArray victims;
 		for (ServerPlayer *victim : to) {

@@ -33,7 +33,7 @@ struct SlashEffectStruct
 	ServerPlayer *to;
 
 	Card *slash;
-	std::vector<Card *> jink;
+	std::vector<const Card *> jink;
 
 	DamageStruct::Nature nature;
 	bool drunk;
@@ -49,7 +49,7 @@ public:
 	Slash(Suit suit, int number);
 
 	bool targetFilter(const std::vector<const Player *> &targets, const Player *toSelect, const Player *self) const override;
-	void effect(GameLogic *logic, CardEffectStruct &cardEffect) override;
+	void effect(GameLogic *logic, CardEffectStruct &cardEffect) const override;
 	bool isAvailable(const Player *player) const override;
 
 protected:
@@ -62,8 +62,8 @@ class Jink : public BasicCard
 public:
 	Jink(Suit suit, int number);
 
-	void onUse(GameLogic *logic, CardUseStruct &use) override;
-	void effect(GameLogic *, CardEffectStruct &effect) override;
+	void onUse(GameLogic *logic, CardUseStruct &use) const override;
+	void effect(GameLogic *, CardEffectStruct &effect) const override;
 	bool isAvailable(const Player *) const override;
 
 protected:
@@ -75,8 +75,8 @@ class Peach : public BasicCard
 public:
 	Peach(Suit suit, int number);
 
-	void onUse(GameLogic *logic, CardUseStruct &use) override;
-	void effect(GameLogic *logic, CardEffectStruct &effect) override;
+	void onUse(GameLogic *logic, CardUseStruct &use) const override;
+	void effect(GameLogic *logic, CardEffectStruct &effect) const override;
 	bool isAvailable(const Player *player) const override;
 
 protected:
