@@ -313,7 +313,6 @@ class Liuli : public ProactiveSkill
 		{
 			CardUseStruct *use = static_cast<CardUseStruct *>(data);
 			use->from->tag["liuli_slash_source"] = true;
-			use->from->unicastTag("liuli_slash_source", target);
 			target->showPrompt("invoke_liuli", use->from);
 			return target->askToUseCard("@liuli");
 		}

@@ -783,24 +783,6 @@ void ServerPlayer::detachSkill(const Skill *skill, SkillAreaType type)
 	m_logic->broadcastNotification(cmd::RemoveSkill, data);
 }
 
-void ServerPlayer::broadcastTag(const std::string &key)
-{
-	JsonObject data;
-	data["player_id"] = id();
-	data["key"] = key;
-	data["value"] = tag.at(key);
-	m_logic->broadcastNotification(cmd::SetPlayerTag, data);
-}
-
-void ServerPlayer::unicastTag(const std::string &key, ServerPlayer *to)
-{
-	JsonObject data;
-	data["player_id"] = id();
-	data["key"] = key;
-	data["value"] = tag.at(key);
-	to->notify(cmd::SetPlayerTag, data);
-}
-
 std::vector<const General *> ServerPlayer::askForGeneral(const std::vector<const General *> &candidates, int num)
 {
 	JsonObject data;

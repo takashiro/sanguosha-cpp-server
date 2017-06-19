@@ -96,9 +96,6 @@ public:
 	void attachSkill(const Skill *skill, SkillAreaType type = SkillAreaType::Acquired);
 	void detachSkill(const Skill *skill, SkillAreaType type = SkillAreaType::Unknown);
 
-	void broadcastTag(const std::string &key);
-	void unicastTag(const std::string &key, ServerPlayer *to);
-
 	std::vector<const General *> askForGeneral(const std::vector<const General *> &candidates, int num);
 
 	//Network functions
