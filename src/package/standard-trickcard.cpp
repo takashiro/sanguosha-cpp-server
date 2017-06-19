@@ -368,6 +368,8 @@ bool Collateral::doCollateral(CardEffectStruct &effect) const
 		effect.to->showPrompt("collateral-slash", effect.from, victim);
 		return effect.to->askToUseCard("Slash", targets);
 	}
+
+	return false;
 }
 
 void Collateral::effect(GameLogic *logic, CardEffectStruct &effect) const
