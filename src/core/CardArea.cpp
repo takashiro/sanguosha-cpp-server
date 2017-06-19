@@ -49,7 +49,7 @@ bool CardArea::add(const Card *card, Direction direction) {
 			return false;
 		}
 	}
-	if (direction == Top)
+	if (direction == Direction::Top)
 		m_cards.push_front(card);
 	else
 		m_cards.push_back(card);
@@ -61,7 +61,7 @@ bool CardArea::add(const Card *card, Direction direction) {
 bool CardArea::add(const std::vector<const Card *> &cards, Direction direction)
 {
 	int num = size();
-	if (direction == Top) {
+	if (direction == Direction::Top) {
 		size_t pos = 0;
 		for (size_t i = 0; i < cards.size(); i++) {
 			const Card *card = cards.at(i);

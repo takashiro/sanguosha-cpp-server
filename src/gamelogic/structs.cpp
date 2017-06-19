@@ -37,7 +37,7 @@ Json CardsMoveStruct::Area::toJson() const
 {
 	JsonObject data;
 	data["type"] = static_cast<int>(type);
-	data["direction"] = direction;
+	data["direction"] = static_cast<int>(direction);
 	data["ownerId"] = ownerId;
 	data["name"] = name;
 	return data;

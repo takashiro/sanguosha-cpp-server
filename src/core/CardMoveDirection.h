@@ -20,7 +20,7 @@ takashiro@qq.com
 
 #pragma once
 
-enum CardMoveDirection
+enum class CardMoveDirection
 {
 	Undefined = 0,
 	Top = 0x1,

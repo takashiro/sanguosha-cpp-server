@@ -50,8 +50,8 @@ public:
 	bool keepVirtualCard() const { return m_keepVirtualCard; }
 	void setKeepVirtualCard(bool keep) { m_keepVirtualCard = keep; }
 
-	bool add(const Card *card, Direction direction = Undefined);
-	bool add(const std::vector<const Card *> &cards, Direction direction = Undefined);
+	bool add(const Card *card, Direction direction = Direction::Undefined);
+	bool add(const std::vector<const Card *> &cards, Direction direction = Direction::Undefined);
 	bool remove(const Card *card);
 	bool remove(const std::vector<const Card *> &cards);
 	void clear() { m_cards.clear(); }
