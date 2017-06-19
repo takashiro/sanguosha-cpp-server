@@ -52,7 +52,7 @@
     <OutDir>$(SolutionDir)..\bin\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)obj\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
     <IncludePath>$(SolutionDir)..\src\network;$(SolutionDir)..\src\util;$(SolutionDir)..\src\core;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)..\lib\$(Platform)\$(Configuration);$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(SolutionDir)..\lib\$(Platform)\$(Configuration);$(SolutionDir)lib;$(LibraryPath)</LibraryPath>
     <ExecutablePath>$(SolutionDir)..\bin\$(Platform)\$(Configuration);$(ExecutablePath)</ExecutablePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -60,7 +60,7 @@
     <OutDir>$(SolutionDir)..\bin\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)obj\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
     <IncludePath>$(SolutionDir)..\src\network;$(SolutionDir)..\src\util;$(SolutionDir)..\src\core;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)..\lib\$(Platform)\$(Configuration);$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(SolutionDir)..\lib\$(Platform)\$(Configuration);$(SolutionDir)lib;$(LibraryPath)</LibraryPath>
     <ExecutablePath>$(SolutionDir)..\bin\$(Platform)\$(Configuration);$(ExecutablePath)</ExecutablePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -75,7 +75,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <AdditionalLibraryDirectories>$(SolutionDir)obj/sanguosha/$(Platform)/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>karuta.lib;CardPattern.obj;Card.obj;Player.obj;CardArea.obj;SkillArea.obj;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>karuta.lib;test-$(Platform)-$(Configuration)-sanguosha.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -94,7 +94,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalLibraryDirectories>$(SolutionDir)obj/sanguosha/$(Platform)/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>karuta.lib;CardPattern.obj;Card.obj;Player.obj;CardArea.obj;SkillArea.obj;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>karuta.lib;test-$(Platform)-$(Configuration)-sanguosha.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
