@@ -255,5 +255,8 @@
     <ClInclude Include="package\hegstandardpackage.h">
       <Filter>package</Filter>
     </ClInclude>
+    <ClInclude Include="gamelogic\SanguoshaDriver.h">
+      <Filter>gamelogic</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

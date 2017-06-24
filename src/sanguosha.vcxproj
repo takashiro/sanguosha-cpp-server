@@ -173,6 +173,7 @@
     <ClInclude Include="gamelogic\GameConfig.h" />
     <ClInclude Include="gamelogic\GameLogic.h" />
     <ClInclude Include="gamelogic\GameMode.h" />
+    <ClInclude Include="gamelogic\SanguoshaDriver.h" />
     <ClInclude Include="gamelogic\ServerPlayer.h" />
     <ClInclude Include="gamelogic\skills.h" />
     <ClInclude Include="gamelogic\structs.h" />

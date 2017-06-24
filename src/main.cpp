@@ -18,32 +18,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 takashiro@qq.com
 ************************************************************************/
 
-#include <GameDriver.h>
-
-class SanguoshaDriver : public KA_IMPORT GameDriver
-{
-public:
-	SanguoshaDriver()
-	{
-	}
-
-	void start() override
-	{
-	}
-
-	void end() override
-	{
-	}
-
-	void addPlayer(KA_IMPORT User *user) override
-	{
-	}
-
-	virtual void removePlayer(KA_IMPORT User *user) override
-	{
-	}
-
-};
+#include "SanguoshaDriver.h"
 
 extern "C" {
 	KA_DLL_EXPORT KA_IMPORT GameDriver *LoadGameDriver()
