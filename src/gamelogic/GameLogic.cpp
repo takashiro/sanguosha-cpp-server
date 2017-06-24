@@ -66,9 +66,32 @@ GameLogic::~GameLogic()
 	}
 }
 
+void GameLogic::start()
+{
+	try {
+		run();
+	} catch (...) {
+		std::cerr << "unexpected exception caught." << std::endl;
+	}
+}
+
+void GameLogic::end()
+{
+}
+
 void GameLogic::addPlayer(KA_IMPORT User *user)
 {
 	m_players.push_back(new ServerPlayer(this, user));
+}
+
+void GameLogic::removePlayer(KA_IMPORT User *user)
+{
+	for (auto i = m_players.begin(); i != m_players.end(); i++) {
+		if ((*i)->user() == user) {
+			m_players.erase(i);
+			break;
+		}
+	}
 }
 
 void GameLogic::addEventHandler(const EventHandler *handler)
@@ -124,15 +147,15 @@ bool GameLogic::trigger(EventType event, ServerPlayer *target, void *data)
 	});
 
 	bool broken = false;
-	size_t triggerableIndex = 0;
-	while (triggerableIndex < handlers.size()) {
+	size_t triggerable_index = 0;
+	while (triggerable_index < handlers.size()) {
 		int currentPriority = 0;
-		std::map<ServerPlayer *, EventList> triggerableEvents;
+		std::map<ServerPlayer *, EventList> triggerable_events;
 
 		//Construct triggerableEvents
 		do {
-			const EventHandler *handler = handlers.at(triggerableIndex);
-			if (triggerableEvents.empty() || handler->priority(event) == currentPriority) {
+			const EventHandler *handler = handlers.at(triggerable_index);
+			if (triggerable_events.empty() || handler->priority(event) == currentPriority) {
 				EventMap events = handler->triggerable(this, event, target, data);
 				if (events.size() > 0) {
 					std::vector<ServerPlayer *> players = this->players();
@@ -142,7 +165,7 @@ bool GameLogic::trigger(EventType event, ServerPlayer *target, void *data)
 
 						for (const std::pair<ServerPlayer *, Event> &e : events) {
 							if (e.first == p) {
-								triggerableEvents[p].push_back(e.second);
+								triggerable_events[p].push_back(e.second);
 								currentPriority = e.second.handler->priority(event);
 							}
 						}
@@ -151,24 +174,24 @@ bool GameLogic::trigger(EventType event, ServerPlayer *target, void *data)
 			} else if (handler->priority(event) != currentPriority) {
 				break;
 			}
-			triggerableIndex++;
-		} while (triggerableIndex < handlers.size());
+			triggerable_index++;
+		} while (triggerable_index < handlers.size());
 
-		if (!triggerableEvents.empty()) {
-			std::vector<ServerPlayer *> allPlayers = this->allPlayers(true);
-			for (ServerPlayer *invoker : allPlayers) {
-				if (triggerableEvents.find(invoker) == triggerableEvents.end())
+		if (!triggerable_events.empty()) {
+			std::vector<ServerPlayer *> all_players = this->allPlayers(true);
+			for (ServerPlayer *invoker : all_players) {
+				if (triggerable_events.find(invoker) == triggerable_events.end())
 					continue;
 
 				for (;;) {
-					EventList &events = triggerableEvents[invoker];
+					EventList &events = triggerable_events[invoker];
 					if (events.empty())
 						break;
 
-					bool hasCompulsory = false;
+					bool has_compulsory = false;
 					for (const Event &d : events) {
 						if (d.handler->isCompulsory()) {
-							hasCompulsory = true;
+							has_compulsory = true;
 							break;
 						}
 					}
@@ -176,8 +199,8 @@ bool GameLogic::trigger(EventType event, ServerPlayer *target, void *data)
 					//Ask the invoker to determine the trigger order
 					Event choice;
 					if (events.size() > 1)
-						choice = invoker->askForTriggerOrder(events, !hasCompulsory);
-					else if (hasCompulsory)
+						choice = invoker->askForTriggerOrder(events, !has_compulsory);
+					else if (has_compulsory)
 						choice = events.front();
 					else
 						choice = invoker->askForTriggerOrder(events, true);
@@ -186,14 +209,14 @@ bool GameLogic::trigger(EventType event, ServerPlayer *target, void *data)
 					if (!choice.isValid())
 						break;
 
-					ServerPlayer *eventTarget = choice.to.empty() ? target : choice.to.front();
+					ServerPlayer *event_target = choice.to.empty() ? target : choice.to.front();
 
 					//Ask the invoker for cost
-					bool takeEffect = choice.handler->onCost(this, event, eventTarget, data, invoker);
+					bool take_effect = choice.handler->onCost(this, event, event_target, data, invoker);
 
 					//Take effect
-					if (takeEffect) {
-						broken = choice.handler->effect(this, event, eventTarget, data, invoker);
+					if (take_effect) {
+						broken = choice.handler->effect(this, event, event_target, data, invoker);
 						if (broken)
 							break;
 					}
@@ -253,7 +276,7 @@ ServerPlayer *GameLogic::findPlayer(uint id) const
 	return nullptr;
 }
 
-std::vector<ServerPlayer *> GameLogic::allPlayers(bool includeDead) const
+std::vector<ServerPlayer *> GameLogic::allPlayers(bool include_dead) const
 {
 	std::vector<ServerPlayer *> players = this->players();
 	ServerPlayer *current = currentPlayer();
@@ -276,11 +299,11 @@ std::vector<ServerPlayer *> GameLogic::allPlayers(bool includeDead) const
 
 	std::vector<ServerPlayer *> all_players;
 	for (size_t i = current_index; i < players.size(); i++) {
-		if (includeDead || players.at(i)->isAlive())
+		if (include_dead || players.at(i)->isAlive())
 			all_players.push_back(players.at(i));
 	}
 	for (size_t i = 0; i < current_index; i++) {
-		if (includeDead || players.at(i)->isAlive())
+		if (include_dead || players.at(i)->isAlive())
 			all_players.push_back(players.at(i));
 	}
 
@@ -295,10 +318,10 @@ std::vector<ServerPlayer *> GameLogic::allPlayers(bool includeDead) const
 	return all_players;
 }
 
-std::vector<ServerPlayer *> GameLogic::otherPlayers(ServerPlayer *except, bool includeDead) const
+std::vector<ServerPlayer *> GameLogic::otherPlayers(ServerPlayer *except, bool include_dead) const
 {
-	std::vector<ServerPlayer *> players = allPlayers(includeDead);
-	if (except && (except->isAlive() || includeDead)) {
+	std::vector<ServerPlayer *> players = allPlayers(include_dead);
+	if (except && (except->isAlive() || include_dead)) {
 		auto i = std::find(players.begin(), players.end(), except);
 		if (i != players.end()) {
 			players.erase(i);
@@ -314,9 +337,7 @@ int GameLogic::countPlayer(bool include_dead) const
 			return player->isAlive();
 		});
 	} else {
-		return countPlayer([] (ServerPlayer *player) {
-			return true;
-		});
+		return static_cast<int>(m_players.size());
 	}
 }
 
@@ -990,24 +1011,12 @@ void GameLogic::filterCardsMove(std::vector<CardsMoveStruct> &moves)
 					CardArea *source = iter->second;
 					if (source) {
 						source->remove(card);
-
-						JsonObject data;
-						data["card_name"] = card->name();
-						data["area"] = source->toJson();
-						data["exists"] = false;
-						broadcastNotification(cmd::SetVirtualCard, data);
 					}
 					m_cardPosition.erase(card);
 				}
 
 				if (destination->add(card)) {
 					m_cardPosition[card] = destination;
-
-					JsonObject data;
-					data["card_name"] = card->name();
-					data["area"] = destination->toJson();
-					data["exists"] = true;
-					broadcastNotification(cmd::SetVirtualCard, data);
 				}
 			}
 		}

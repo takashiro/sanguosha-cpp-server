@@ -47,7 +47,10 @@ public:
 	GameLogic();
 	~GameLogic();
 
+	void start() override;
+	void end() override;
 	void addPlayer(KA_IMPORT User *user) override;
+	void removePlayer(KA_IMPORT User *user) override;
 
 	const GameConfig *config() const { return m_config; }
 
