@@ -14,5 +14,8 @@
     <ClCompile Include="cardpatterntest.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="gamelogictest.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

@@ -146,7 +146,7 @@ bool GameLogic::trigger(EventType event, ServerPlayer *target, void *data)
 		return a->priority(event) > b->priority(event);
 	});
 
-	bool broken = false;
+	bool process_broken = false;
 	size_t triggerable_index = 0;
 	while (triggerable_index < handlers.size()) {
 		int currentPriority = 0;
@@ -216,9 +216,11 @@ bool GameLogic::trigger(EventType event, ServerPlayer *target, void *data)
 
 					//Take effect
 					if (take_effect) {
-						broken = choice.handler->effect(this, event, event_target, data, invoker);
-						if (broken)
+						bool broken = choice.handler->effect(this, event, event_target, data, invoker);
+						if (broken) {
+							process_broken = true;
 							break;
+						}
 					}
 
 					//Remove targets that are in front of the triggered target
@@ -258,7 +260,7 @@ bool GameLogic::trigger(EventType event, ServerPlayer *target, void *data)
 		}
 	}
 
-	return broken;
+	return process_broken;
 }
 
 const std::vector<ServerPlayer *> &GameLogic::players() const
@@ -654,31 +656,28 @@ void GameLogic::damage(DamageStruct &damage)
 
 			if (damage.to && trigger(Damaged, damage.to, data))
 				break;
+
+			if (damage.to)
+				trigger(BeforeHpReduced, damage.to, data);
+
+			if (damage.to) {
+				JsonArray arg = {damage.to->id(), damage.nature, damage.damage};
+				broadcastNotification(cmd::Damage, arg);
+
+				int new_hp = damage.to->hp() - damage.damage;
+				damage.to->setHp(new_hp);
+				damage.to->broadcastProperty("hp", new_hp);
+
+				trigger(AfterHpReduced, damage.to, data);
+			}
+
+			if (damage.from)
+				trigger(AfterDamaging, damage.from, data);
+
+			if (damage.to)
+				trigger(AfterDamaged, damage.to, data);
+
 		} while (false);
-
-		if (damage.to)
-			trigger(BeforeHpReduced, damage.to, data);
-
-		if (damage.to) {
-			JsonArray arg;
-			arg.reserve(3);
-			arg.push_back(damage.to->id());
-			arg.push_back(damage.nature);
-			arg.push_back(damage.damage);
-			broadcastNotification(cmd::Damage, arg);
-
-			int newHp = damage.to->hp() - damage.damage;
-			damage.to->setHp(newHp);
-			damage.to->broadcastProperty("hp", newHp);
-
-			trigger(AfterHpReduced, damage.to, data);
-		}
-
-		if (damage.from)
-			trigger(AfterDamaging, damage.from, data);
-
-		if (damage.to)
-			trigger(AfterDamaged, damage.to, data);
 
 		if (damage.to)
 			trigger(DamageComplete, damage.to, data);
@@ -849,17 +848,26 @@ std::map<uint, std::vector<const General *>> GameLogic::broadcastRequestForGener
 
 void GameLogic::broadcastNotification(cmd command)
 {
-	room()->broadcastNotification(static_cast<int>(command));
+	Room *room = this->room();
+	if (room) {
+		room->broadcastNotification(static_cast<int>(command));
+	}
 }
 
 void GameLogic::broadcastNotification(cmd command, const KA_IMPORT Json &arguments)
 {
-	room()->broadcastNotification(static_cast<int>(command), arguments);
+	Room *room = this->room();
+	if (room) {
+		room->broadcastNotification(static_cast<int>(command), arguments);
+	}
 }
 
 void GameLogic::broadcastNotification(cmd command, const KA_IMPORT Json &arguments, ServerPlayer *except)
 {
-	room()->broadcastNotification(static_cast<int>(command), arguments, except->user());
+	Room *room = this->room();
+	if (room) {
+		room->broadcastNotification(static_cast<int>(command), arguments, except->user());
+	}
 }
 
 void GameLogic::broadcastRequest(const std::vector<ServerPlayer *> &players)
