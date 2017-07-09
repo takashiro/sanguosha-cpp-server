@@ -53,6 +53,7 @@
     <IncludePath>$(SolutionDir)..\src\network;$(SolutionDir)..\src\util;$(SolutionDir)..\src\core;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)..\lib\$(Platform)\$(Configuration);$(SolutionDir)lib;$(LibraryPath)</LibraryPath>
     <ExecutablePath>$(SolutionDir)..\bin\$(Platform)\$(Configuration);$(ExecutablePath)</ExecutablePath>
+    <TargetName>$(SolutionName)-$(ProjectName)</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>$(SolutionDir)..\bin\$(Platform)\$(Configuration)\</OutDir>
@@ -60,6 +61,7 @@
     <IncludePath>$(SolutionDir)..\src\network;$(SolutionDir)..\src\util;$(SolutionDir)..\src\core;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)..\lib\$(Platform)\$(Configuration);$(SolutionDir)lib;$(LibraryPath)</LibraryPath>
     <ExecutablePath>$(SolutionDir)..\bin\$(Platform)\$(Configuration);$(ExecutablePath)</ExecutablePath>
+    <TargetName>$(SolutionName)-$(ProjectName)</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
