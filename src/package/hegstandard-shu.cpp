@@ -29,6 +29,8 @@ takashiro@qq.com
 #include "skills.h"
 #include "structs.h"
 
+#include <algorithm>
+
 namespace
 {
 

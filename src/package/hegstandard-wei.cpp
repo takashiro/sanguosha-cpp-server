@@ -19,8 +19,9 @@ takashiro@qq.com
 ************************************************************************/
 
 #include "hegstandardpackage.h"
-#include "general.h"
-#include "skill.h"
+
+#include "General.h"
+#include "Skill.h"
 
 void HegStandardPackage::addWeiGenerals()
 {

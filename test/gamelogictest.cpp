@@ -1,14 +1,10 @@
-#include "CppUnitTest.h"
+#include "test.h"
 
 #include "GameLogic.h"
 #include "EventHandler.h"
 #include "ServerPlayer.h"
 
 #include <User.h>
-
-using namespace Microsoft::VisualStudio::CppUnitTestFramework;
-
-#define assert(exp) Assert::IsTrue(exp)
 
 KA_USING_NAMESPACE
 
@@ -58,7 +54,7 @@ namespace
 	};
 }
 
-namespace test
+namespace UnitTest
 {
 	TEST_CLASS(GameLogicTest)
 	{

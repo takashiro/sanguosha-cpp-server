@@ -1,4 +1,4 @@
-#include "CppUnitTest.h"
+#include "test.h"
 
 #include "CardPattern.h"
 
@@ -6,11 +6,7 @@
 #include "CardArea.h"
 #include "Player.h"
 
-using namespace Microsoft::VisualStudio::CppUnitTestFramework;
-
-#define assert(exp) Assert::IsTrue(exp)
-
-namespace test
+namespace UnitTest
 {
 	class TestCard : public Card
 	{
@@ -133,7 +129,7 @@ namespace test
 			Player player(0);
 			player.equipArea()->add(&card1);
 			TestCard card2;
-			
+
 			CardPattern p("test|.|.|equipped");
 			assert(p.match(&player, &card1));
 			assert(!p.match(&player, &card2));

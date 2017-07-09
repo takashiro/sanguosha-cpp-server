@@ -23,6 +23,7 @@ takashiro@qq.com
 #include "Skill.h"
 
 #include "CardFilter.h"
+#include "CardSuit.h"
 #include "EventHandler.h"
 
 #include "structs.h"

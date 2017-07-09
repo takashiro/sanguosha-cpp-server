@@ -53,8 +53,8 @@ enum class cmd
 	ArrangeCardMove,
 	ArrangeCardEnd,
 	AskForOption,
-	SetVirtualCard,
-	SetPlayerTag,
+	AddVirtualCard,
+	RemoveVirtualCard,
 	GameOver,
 	Act,
 

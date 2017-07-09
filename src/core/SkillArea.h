@@ -42,7 +42,7 @@ public:
 
 	const std::vector<const Skill *> &skills() const { return m_skills; }
 
-	size_t size() const { return m_skills.size(); }
+	std::size_t size() const { return m_skills.size(); }
 
 private:
 	Type m_type;

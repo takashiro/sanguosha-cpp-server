@@ -55,6 +55,7 @@ public:
 	};
 
 	Card(Suit suit = Suit::None, int number = 0);
+	virtual ~Card();
 	virtual Card *clone() const = 0;
 
 	bool is(const std::string &name) const;

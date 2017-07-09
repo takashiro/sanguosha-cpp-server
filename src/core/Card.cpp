@@ -46,6 +46,10 @@ Card::Card(Suit suit, int number)
 {
 }
 
+Card::~Card()
+{
+}
+
 bool Card::is(const std::string &name) const
 {
 	if (m_name == name) {

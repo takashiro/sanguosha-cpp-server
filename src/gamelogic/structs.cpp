@@ -89,7 +89,7 @@ Json CardsMoveStruct::toJson(bool open) const
 			card_data.push_back(card->id());
 		data["cards"] = card_data;
 	} else {
-		data["cards"] = cards.size();
+		data["cards"] = static_cast<int>(cards.size());
 	}
 
 	data["isOpen"] = isOpen;
