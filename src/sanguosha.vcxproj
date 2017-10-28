@@ -44,16 +44,16 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <OutDir>$(SolutionDir)..\bin\$(Platform)\$(Configuration)\</OutDir>
+    <OutDir>$(SolutionDir)..\..\bin\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)obj\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
-    <IncludePath>$(SolutionDir)..\src\core;$(SolutionDir)..\src\util;$(SolutionDir)..\src\network;$(ProjectDir)core;$(ProjectDir)mode;$(ProjectDir)gamelogic;$(ProjectDir)package;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)..\lib\$(Platform)\$(Configuration);$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)..\..\src\core;$(SolutionDir)..\..\src\util;$(SolutionDir)..\..\src\network;$(ProjectDir)core;$(ProjectDir)mode;$(ProjectDir)gamelogic;$(ProjectDir)package;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)..\..\lib\$(Platform)\$(Configuration);$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <OutDir>$(SolutionDir)..\bin\$(Platform)\$(Configuration)\</OutDir>
+    <OutDir>$(SolutionDir)..\..\bin\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)obj\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
-    <IncludePath>$(SolutionDir)..\src\core;$(SolutionDir)..\src\util;$(SolutionDir)..\src\network;$(ProjectDir)core;$(ProjectDir)mode;$(ProjectDir)gamelogic;$(ProjectDir)package;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)..\lib\$(Platform)\$(Configuration);$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)..\..\src\core;$(SolutionDir)..\..\src\util;$(SolutionDir)..\..\src\network;$(ProjectDir)core;$(ProjectDir)mode;$(ProjectDir)gamelogic;$(ProjectDir)package;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)..\..\lib\$(Platform)\$(Configuration);$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>

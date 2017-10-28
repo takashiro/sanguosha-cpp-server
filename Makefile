@@ -10,7 +10,7 @@ SOURCEDIR = \
 	src/package \
 	src
 
-KARUTADIR ?= ..
+KARUTADIR ?= ..\..
 
 INCLUDEPATH = $(SOURCEDIR) $(KARUTADIR)/src/core $(KARUTADIR)/src/network $(KARUTADIR)/src/util
 
