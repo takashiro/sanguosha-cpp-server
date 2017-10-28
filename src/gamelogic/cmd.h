@@ -57,6 +57,12 @@ enum class cmd
 	RemoveVirtualCard,
 	GameOver,
 	Act,
+	EnableCards,
+	SelectCard,
+	EnableSkills,
+	SelectSkill,
+	EnablePlayers,
+	SelectPlayer,
 
 	CommandCount
 };
